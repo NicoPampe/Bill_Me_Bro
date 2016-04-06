@@ -1,5 +1,6 @@
 package com.example.npampe.billmebro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,7 +34,8 @@ public class WelcomeFragment extends Fragment {
         mLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Thanks Obama!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), ReceiptListActivity.class);
+                startActivity(intent);
             }
         });
         return view;
