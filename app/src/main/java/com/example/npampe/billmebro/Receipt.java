@@ -79,4 +79,8 @@ public class Receipt {
     public void setNotes(String notes) {
         mNotes = notes;
     }
+
+    public UUID getId() {
+        return mId;
+    }
 }
