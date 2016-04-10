@@ -3,7 +3,6 @@ package com.example.npampe.billmebro;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +20,7 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -60,8 +60,10 @@ public class ReceiptListFragment extends Fragment {
     public void updateUI() {
         List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
         List<Receipt> receipts1 = Arrays.asList(new Receipt("Receipt C"), new Receipt("Receipt D"));
-        ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0);
-        ReceiptParentListItem item1 = new ReceiptParentListItem(receipts1);
+
+        ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0, receipts0.get(0).getDate());
+        ReceiptParentListItem item1 = new ReceiptParentListItem(receipts1, receipts1.get(0).getDate());
+
         List<ParentListItem> items = new ArrayList<ParentListItem>();
         items.add(item0);
         items.add(item1);
@@ -78,9 +80,9 @@ public class ReceiptListFragment extends Fragment {
         private List mReceipts;
         private String mDate;
 
-        public ReceiptParentListItem(List receipts) {
+        public ReceiptParentListItem(List receipts, Date date) {
             mReceipts = receipts;
-            mDate = "Date 0";
+            mDate = date.toString();
         }
 
         @Override
@@ -130,15 +132,15 @@ public class ReceiptListFragment extends Fragment {
     }
 
     public class ReceiptChildViewHolder extends ChildViewHolder {
-        private TextView mIngredientTextView;
+        private TextView mReceiptChildTextView;
 
         public ReceiptChildViewHolder(View itemView) {
             super(itemView);
-            mIngredientTextView = (TextView) itemView.findViewById(R.id.list_item_receipt_child_text_view);
+            mReceiptChildTextView = (TextView) itemView.findViewById(R.id.list_item_receipt_child_text_view);
         }
 
         public void bind(Receipt receipt) {
-            mIngredientTextView.setText(receipt.getTitle());
+            mReceiptChildTextView.setText(receipt.getTitle());
         }
     }
 

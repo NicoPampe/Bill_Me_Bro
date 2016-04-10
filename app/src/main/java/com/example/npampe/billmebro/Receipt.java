@@ -1,5 +1,8 @@
 package com.example.npampe.billmebro;
 
+import android.text.format.Time;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -30,6 +33,14 @@ public class Receipt {
 
     public Receipt(String title) {
         mTitle = title;
+
+        Calendar calendar = Calendar.getInstance();
+        mDate = calendar.getTime();
+    }
+
+    public Receipt(String title, Date date) {
+        mTitle = title;
+        mDate = date;
     }
 
     public String getTitle() {

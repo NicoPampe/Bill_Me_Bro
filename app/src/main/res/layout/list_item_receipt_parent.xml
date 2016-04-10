@@ -4,13 +4,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#dbdbda">
+                android:background="@android:color/holo_blue_dark">
 
     <TextView
         android:id="@+id/list_item_receipt_parent_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:textColor="@android:color/white"
         android:layout_weight="2"
         android:textStyle="bold"
         android:text="Date" />
@@ -18,9 +19,11 @@
     <ImageButton
         android:id="@+id/list_item_receipt_parent_drop_down_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:layout_margin="8dp"
+        android:background="@android:color/transparent"
         android:src="@android:drawable/arrow_down_float" />
 
 </LinearLayout>
