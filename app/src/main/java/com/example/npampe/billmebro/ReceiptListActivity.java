@@ -26,4 +26,9 @@ public class ReceiptListActivity extends SingleFragmentActivity implements Recei
         ReceiptListFragment listFragment = (ReceiptListFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         listFragment.updateUI();
     }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activiity_twopane;
+    }
 }
