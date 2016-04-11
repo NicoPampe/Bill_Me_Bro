@@ -147,15 +147,16 @@ public class ReceiptListFragment extends Fragment {
     public class ReceiptChildViewHolder extends ChildViewHolder {
         private TextView mReceiptChildTextView;
         private Button mEditButton;
+
         private final GestureDetector detector = new GestureDetector(new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
+                Toast.makeText(getActivity().getApplicationContext(), mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public void onShowPress(MotionEvent e) {
-                Toast.makeText(getActivity().getApplicationContext(), mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -175,7 +176,7 @@ public class ReceiptListFragment extends Fragment {
 
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                if (e1.getX() - e2.getX() > 100 && Math.abs(velocityX) > 200) {
+                if (e1.getX() - e2.getX() > 100 && Math.abs(velocityX) > 150) {
                     Log.d(TAG, "onFling: Right -> Left");
 
                     // Show/enable edit button
@@ -188,7 +189,7 @@ public class ReceiptListFragment extends Fragment {
                     });
                     return true;
                 }
-                else if (e2.getX() - e1.getX() > 100 && Math.abs(velocityX) > 200) {
+                else if (e2.getX() - e1.getX() > 100 && Math.abs(velocityX) > 150) {
                     Log.d(TAG, "onFling: Left -> Right");
 
                     // Hide/disable edit button
@@ -216,14 +217,6 @@ public class ReceiptListFragment extends Fragment {
             super(itemView);
             mReceiptChildTextView = (TextView) itemView.findViewById(R.id.list_item_receipt_child_text_view);
             mEditButton = (Button) itemView.findViewById(R.id.list_item_receipt_child_edit_button);
-
-            mReceiptChildTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO: Show dialog of receipt selected
-                    Toast.makeText(getActivity().getApplicationContext(), mReceiptChildTextView.getText(), Toast.LENGTH_SHORT);
-                }
-            });
 
             mReceiptChildTextView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
