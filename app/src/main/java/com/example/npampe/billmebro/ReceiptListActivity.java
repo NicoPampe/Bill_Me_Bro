@@ -29,7 +29,7 @@ public class ReceiptListActivity extends SingleFragmentActivity
 
     @Override
     public void onReceiptUpdated(Receipt receipt) {
-        ReceiptListFragment listFragment = (ReceiptListFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        ReceiptListFragment listFragment = (ReceiptListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         listFragment.updateUI();
     }
 

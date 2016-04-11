@@ -2,7 +2,6 @@ package com.example.npampe.billmebro;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,20 +38,15 @@ public class ReceiptListFragment extends Fragment {
 
     @Bind(R.id.receipt_recycler_view)
     RecyclerView mRecyclerView;
-
-    private Callbacks mCallbacks;
-    private MyAdapter mAdapter;
-
     // For purposes of storing example receipts
     // TODO: Remove after further implementation
     List<ParentListItem> items;
-
-    public interface Callbacks {
-        void onReceiptSelected(Receipt receipt);
-    }
+    private Callbacks mCallbacks;
+    private MyAdapter mAdapter;
 
     /**
      * Callbacks onAttach
+     *
      * @param context
      */
     @Override
@@ -79,6 +73,7 @@ public class ReceiptListFragment extends Fragment {
 
     /**
      * View created for current fragment
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -123,6 +118,7 @@ public class ReceiptListFragment extends Fragment {
 
     /**
      * Options Menu, Has create new crime and view details about group
+     *
      * @param menu
      * @param inflater
      */
@@ -174,6 +170,10 @@ public class ReceiptListFragment extends Fragment {
         } else {
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    public interface Callbacks {
+        void onReceiptSelected(Receipt receipt);
     }
 
     public class ReceiptParentListItem implements ParentListItem {
@@ -278,12 +278,11 @@ public class ReceiptListFragment extends Fragment {
                             Toast.makeText(getActivity().getApplicationContext(), "EDIT: " + mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
                             updateUI();
                             // TODO:
-                           mCallbacks.onReceiptSelected(mReceipt);
+                            mCallbacks.onReceiptSelected(mReceipt);
                         }
                     });
                     return true;
-                }
-                else if (e2.getX() - e1.getX() > minDist && Math.abs(velocityX) > swipeThresh) {
+                } else if (e2.getX() - e1.getX() > minDist && Math.abs(velocityX) > swipeThresh) {
                     Log.d(TAG, "onFling: Left -> Right");
 
                     // Hide/disable edit button
@@ -297,9 +296,9 @@ public class ReceiptListFragment extends Fragment {
                     return false;
                 }
 
-                if(e1.getY() - e2.getY() > 100 && Math.abs(velocityY) > 200) {
+                if (e1.getY() - e2.getY() > 100 && Math.abs(velocityY) > 200) {
                     return false;
-                }  else if (e2.getY() - e1.getY() > 100 && Math.abs(velocityY) > 200) {
+                } else if (e2.getY() - e1.getY() > 100 && Math.abs(velocityY) > 200) {
                     return false;
                 }
                 return false;

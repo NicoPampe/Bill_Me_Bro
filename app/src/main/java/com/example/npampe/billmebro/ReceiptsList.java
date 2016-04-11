@@ -1,16 +1,13 @@
 package com.example.npampe.billmebro;
 
-import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.util.Log;
 
 import com.example.npampe.billmebro.database.ReceiptBaseHelper;
 import com.example.npampe.billmebro.database.ReceiptCursorWrapper;
-import com.example.npampe.billmebro.database.ReceiptDbSchema;
 import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
 
 import java.util.ArrayList;
@@ -18,7 +15,6 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- *
  * Receipts List contains the List of Receipts in the group.
  * Methods to modify and receive information about the list.
  */
@@ -42,11 +38,6 @@ public class ReceiptsList {
                 .getWritableDatabase();
     }
 
-    public void nukeIt() {
-        Log.i(TAG, "Nuking database!");
-        mContext.deleteDatabase(ReceiptBaseHelper.DATABASE_NAME);
-    }
-
     /**
      * Receipt constructor
      *
@@ -58,6 +49,11 @@ public class ReceiptsList {
             sReceiptsList = new ReceiptsList(context);
         }
         return sReceiptsList;
+    }
+
+    public void nukeIt() {
+        Log.i(TAG, "Nuking database!");
+        mContext.deleteDatabase(ReceiptBaseHelper.DATABASE_NAME);
     }
 
     /**
@@ -78,12 +74,12 @@ public class ReceiptsList {
     /**
      * Deletes the receipt @ the location
      *
-     * @param r
+     * @param receipt
      */
     public void removeReceipt(Receipt receipt) {
         int updated = mdb.delete(ReceiptTable.NAME,
                 ReceiptTable.Cols.UUID + " = ?",
-                new String[] {receipt.getId().toString() });
+                new String[]{receipt.getId().toString()});
         Log.i(TAG, "Removed " + updated + " rows with " + receipt);
     }
 
@@ -105,13 +101,6 @@ public class ReceiptsList {
         }
 
         return receipts;
-    }
-
-    /**
-     * @return size of the receipts list
-     */
-    public int receiptCount() {
-        return 0;
     }
 
     /**

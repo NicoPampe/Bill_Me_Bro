@@ -29,6 +29,7 @@ public class ReceiptPagerActivity extends AppCompatActivity implements ReceiptFr
     /**
      * Creates the pager view
      * onCreate uses the Fragment Manager
+     *
      * @param savedInstanceState
      */
     @Override
@@ -36,7 +37,7 @@ public class ReceiptPagerActivity extends AppCompatActivity implements ReceiptFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt_pager);
 
-        UUID crimeID = (UUID)getIntent().getSerializableExtra(EXTRA_RECEIPT_ID);
+        UUID crimeID = (UUID) getIntent().getSerializableExtra(EXTRA_RECEIPT_ID);
 
         mViewPager = (ViewPager) findViewById(R.id.activity_receipt_pager_view_pager);
 

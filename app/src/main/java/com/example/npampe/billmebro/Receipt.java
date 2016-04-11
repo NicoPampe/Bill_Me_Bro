@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Receipt
-    implements Serializable {
+        implements Serializable {
     private static final String TAG = "Receipt";
 
     private UUID mId = UUID.randomUUID();

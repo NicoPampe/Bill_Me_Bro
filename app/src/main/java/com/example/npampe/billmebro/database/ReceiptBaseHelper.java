@@ -3,22 +3,9 @@ package com.example.npampe.billmebro.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
-import com.example.npampe.billmebro.Receipt;
-import com.example.npampe.billmebro.ReceiptsList;
-import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
-
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ReceiptBaseHelper extends SQLiteOpenHelper {
 

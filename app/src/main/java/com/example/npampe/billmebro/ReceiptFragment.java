@@ -1,9 +1,8 @@
 package com.example.npampe.billmebro;
 
 import android.app.Activity;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -31,7 +30,7 @@ public class ReceiptFragment extends Fragment {
     }
 
     @Override
-    public  void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         UUID crimeID = (UUID) getArguments().getSerializable(ARG_RECEIPT_ID);
@@ -73,22 +72,22 @@ public class ReceiptFragment extends Fragment {
         mCallbacks.onReceiptUpdated(mReceipt);
     }
 
-    /**
-     * Required interface for hositng act
-     */
-    public interface Callbacks {
-        void onReceiptUpdated(Receipt receipt);
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mCallbacks = (Callbacks)activity;
+        mCallbacks = (Callbacks) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
+    }
+
+    /**
+     * Required interface for hositng act
+     */
+    public interface Callbacks {
+        void onReceiptUpdated(Receipt receipt);
     }
 }
