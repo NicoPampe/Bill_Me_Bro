@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import java.util.Arrays;
 import java.util.List;
 
-public class EditReceiptFragment extends Fragment {
+public class ReceiptEditFragment extends Fragment {
 
-    private static final String TAG = "EditReceiptFragment";
+    private static final String TAG = "ReceiptEditFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,

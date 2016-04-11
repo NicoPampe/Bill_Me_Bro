@@ -2,10 +2,10 @@ package com.example.npampe.billmebro;
 
 import android.support.v4.app.Fragment;
 
-public class EditReceiptActivity extends SingleFragmentActivity {
+public class ReceiptEditActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new EditReceiptFragment();
+        return new ReceiptEditFragment();
     }
 }
