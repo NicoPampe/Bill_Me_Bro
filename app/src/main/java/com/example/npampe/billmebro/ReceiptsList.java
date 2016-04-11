@@ -18,17 +18,8 @@ import java.util.UUID;
 public class ReceiptsList {
     private static ReceiptsList sReceiptsList;
 
-    /**
-     * List of Receipts
-     */
     private List<Receipt> mReceipts;
-    /**
-     * Context of the receipt list application
-     */
     private Context mContext;
-    /**
-     * SQLite Database of the receipt list
-     */
     private SQLiteDatabase mDatabase;
 
     /**
@@ -65,7 +56,7 @@ public class ReceiptsList {
      * Deletes the receipt @ the location
      * @param r
      */
-    public void deleteCrime(Receipt r) {
+    public void removeReceipt(Receipt r) {
         mReceipts.remove(mReceipts.indexOf(r));
     }
 
@@ -88,7 +79,7 @@ public class ReceiptsList {
      * @param id The Id of the target receipt
      * @return Receipt
      */
-    public Receipt getRectip(UUID id) {
+    public Receipt getReceipt(UUID id) {
         for (Receipt receipt : mReceipts) {
             if (receipt.getId().equals(id)) {
                 return  receipt;
