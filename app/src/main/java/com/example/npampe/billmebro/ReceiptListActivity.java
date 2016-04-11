@@ -17,7 +17,7 @@ public class ReceiptListActivity extends SingleFragmentActivity implements Recei
             startActivity(intent);
         } else {
             Fragment newRecetiptDetails = ReceiptFragment.newInstance(receipt.getId());
-            getSupportFragmentManager().beginTransaction().replace(R.id.edit_receipt_fragment, newRecetiptDetails).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, newRecetiptDetails).commit();
         }
     }
 

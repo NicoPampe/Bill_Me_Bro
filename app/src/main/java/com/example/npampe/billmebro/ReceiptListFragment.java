@@ -2,18 +2,23 @@ package com.example.npampe.billmebro;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
@@ -47,7 +52,7 @@ public class ReceiptListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        mCallbacks = (Callbacks) context;
+        mCallbacks = (Callbacks) context;
     }
 
     /**
@@ -109,6 +114,14 @@ public class ReceiptListFragment extends Fragment {
 
     public void updateUI() {
         List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
+
+        // For Alpha Release Demonstration Purposes Only
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         List<Receipt> receipts1 = Arrays.asList(new Receipt("Receipt C"), new Receipt("Receipt D"));
 
         ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0, receipts0.get(0).getDate());
@@ -189,27 +202,103 @@ public class ReceiptListFragment extends Fragment {
     }
 
     public class ReceiptChildViewHolder extends ChildViewHolder implements View.OnClickListener {
-        @Bind(R.id.list_item_receipt_child_text_view)
-        TextView mReceiptChildTextView;
-
+        private TextView mReceiptChildTextView;
+        private Button mEditButton;
         private Receipt mReceipt;
+
+        @Override
+        public void onClick(View v) {
+            mCallbacks.onReceiptSelected(mReceipt);
+        }
+
+        private final GestureDetector detector = new GestureDetector(new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+            }
+
+            /**
+             * implements the View.onSingleTapUp
+             * @param e
+             * @return
+             */
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                Toast.makeText(getActivity().getApplicationContext(), mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                if (e1.getX() - e2.getX() > 100 && Math.abs(velocityX) > 150) {
+                    Log.d(TAG, "onFling: Right -> Left");
+
+                    // Show/enable edit button
+                    mEditButton.setVisibility(View.VISIBLE);
+                    mEditButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity().getApplicationContext(), "EDIT: " + mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return true;
+                }
+                else if (e2.getX() - e1.getX() > 100 && Math.abs(velocityX) > 150) {
+                    Log.d(TAG, "onFling: Left -> Right");
+
+                    // Hide/disable edit button
+                    mEditButton.setVisibility(View.INVISIBLE);
+                    mEditButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                    return false;
+                }
+
+                if(e1.getY() - e2.getY() > 100 && Math.abs(velocityY) > 200) {
+                    return false;
+                }  else if (e2.getY() - e1.getY() > 100 && Math.abs(velocityY) > 200) {
+                    return false;
+                }
+                return false;
+            }
+
+        });
 
         public ReceiptChildViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            mReceiptChildTextView = (TextView) itemView.findViewById(R.id.list_item_receipt_child_text_view);
+            mEditButton = (Button) itemView.findViewById(R.id.list_item_receipt_child_edit_button);
+
+            mReceiptChildTextView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.d(TAG, "onTouch: ");
+                    detector.onTouchEvent(event);
+                    return true;
+                }
+            });
         }
 
         public void bind(Receipt receipt) {
             mReceiptChildTextView.setText(receipt.getTitle());
-        }
-
-        /**
-         * implements the View.OnClickListener
-         * @param v
-         */
-        @Override
-        public void onClick(View v) {
-            mCallbacks.onReceiptSelected(mReceipt);
+            mReceipt = receipt;
         }
     }
 
