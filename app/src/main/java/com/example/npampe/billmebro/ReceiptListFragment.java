@@ -84,7 +84,7 @@ public class ReceiptListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_receipt_list, container, false);
         ButterKnife.bind(this, view);
 
-       mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
         return view;
     }
@@ -136,6 +136,8 @@ public class ReceiptListFragment extends Fragment {
 
             mAdapter = new MyAdapter(getActivity().getApplicationContext(), items);
             mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -208,6 +210,7 @@ public class ReceiptListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            updateUI();
             mCallbacks.onReceiptSelected(mReceipt);
         }
 
@@ -253,6 +256,9 @@ public class ReceiptListFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(getActivity().getApplicationContext(), "EDIT: " + mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
+                            updateUI();
+                            // TODO:
+//                            mCallbacks.onReceiptSelected(mReceipt);
                         }
                     });
                     return true;
