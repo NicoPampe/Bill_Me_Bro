@@ -130,7 +130,6 @@ public class ReceiptListFragment extends Fragment {
         }
 
         List<Receipt> receipts1 = Arrays.asList(new Receipt("Receipt C"), new Receipt("Receipt D"));
-        ReceiptsList.get(getActivity()).clearReceipts();
         ReceiptsList.get(getActivity()).addReceipt(receipts0.get(0));
         ReceiptsList.get(getActivity()).addReceipt(receipts0.get(1));
         ReceiptsList.get(getActivity()).addReceipt(receipts1.get(0));

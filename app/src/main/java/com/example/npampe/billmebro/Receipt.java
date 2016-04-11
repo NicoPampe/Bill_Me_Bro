@@ -43,6 +43,14 @@ public class Receipt {
         mDate = date;
     }
 
+    public Receipt(UUID uuid) {
+        mId = uuid;
+    }
+
+    public String toString() {
+        return "Receipt[" + mTitle + "; total=" + mTotal + "; date=" + mDate + "]";
+    }
+
     public String getTitle() {
         return mTitle;
     }
