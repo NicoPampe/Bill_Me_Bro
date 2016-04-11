@@ -7,8 +7,8 @@ import android.util.Log;
 
 import com.example.npampe.billmebro.database.ReceiptBaseHelper;
 import com.example.npampe.billmebro.database.ReceiptDbSchema;
+import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,9 +23,8 @@ public class ReceiptsList {
 
     private static ReceiptsList sReceiptsList;
 
-    private List<Receipt> mReceipts = new ArrayList<>();
     private Context mContext;
-    private SQLiteDatabase mDatabase;
+    private SQLiteDatabase mdb;
 
     /**
      * Non static Receipt List constructor
@@ -33,7 +32,7 @@ public class ReceiptsList {
      */
     public ReceiptsList(Context context) {
         mContext = context.getApplicationContext();
-        mDatabase = new ReceiptBaseHelper(mContext)
+        mdb = new ReceiptBaseHelper(mContext)
                 .getWritableDatabase();
     }
 
@@ -56,11 +55,11 @@ public class ReceiptsList {
 
     /**
      * Adds a receipt to the Receipts List
-     * @param r
+     * @param receipt
      */
-    public void addReceipt(Receipt r) {
-        Log.d(TAG, "addReceipt: " + r.getTitle());
-        mReceipts.add(r);
+    public void addReceipt(Receipt receipt) {
+        ContentValues values = getContentValues(receipt);
+        mdb.insert(ReceiptTable.NAME, null, values);
     }
 
     /**
@@ -68,21 +67,20 @@ public class ReceiptsList {
      * @param r
      */
     public void removeReceipt(Receipt r) {
-        mReceipts.remove(mReceipts.indexOf(r));
     }
 
     /**
      * @return the receipt list
      */
     public List<Receipt> getReceipts() {
-        return mReceipts;
+        return null;
     }
 
     /**
      * @return size of the receipts list
      */
     public int receiptCount() {
-        return mReceipts.size();
+        return 0;
     }
 
     /**
@@ -91,12 +89,6 @@ public class ReceiptsList {
      * @return Receipt
      */
     public Receipt getReceipt(UUID id) {
-        for (Receipt receipt : mReceipts) {
-            if (receipt.getId().equals(id)) {
-                Log.d(TAG, "getReceipt: uuid = " + id);
-                return  receipt;
-            }
-        }
         return null;
     }
 
@@ -105,12 +97,12 @@ public class ReceiptsList {
      * @param receipt
      */
     public void updateReceipt(Receipt receipt) {
-        for (Receipt thisReceitp : mReceipts) {
-            if (thisReceitp.getId() == receipt.getId()) {
-                int pos = mReceipts.indexOf(thisReceitp);
-                mReceipts.set(pos, receipt);
-            }
-        }
+        String uuidStr = receipt.getId().toString();
+        ContentValues values = getContentValues(receipt);
+
+        mdb.update(ReceiptTable.NAME, values,
+                ReceiptTable.Cols.UUID + " = ?",
+                new String[] {uuidStr});
     }
 
     /**
@@ -120,15 +112,16 @@ public class ReceiptsList {
      */
     private ContentValues getContentValues(Receipt receipt) {
         ContentValues values = new ContentValues();
-        values.put(ReceiptDbSchema.ReceiptTable.Cols.UUID, receipt.getId().toString());
-        values.put(ReceiptDbSchema.ReceiptTable.Cols.TITLE, receipt.getTitle());
-        values.put(ReceiptDbSchema.ReceiptTable.Cols.DATE, receipt.getDate().getTime());
-        values.put(ReceiptDbSchema.ReceiptTable.Cols.TOTAL, receipt.getTotal());
+
+        values.put(ReceiptTable.Cols.UUID,  receipt.getId().toString());
+        values.put(ReceiptTable.Cols.TITLE, receipt.getTitle());
+        values.put(ReceiptTable.Cols.DATE, receipt.getDate().getTime());
+        values.put(ReceiptTable.Cols.TOTAL, receipt.getTotal());
 
         return values;
     }
 
     public void clearReceipts() {
-        mReceipts.clear();
+
     }
 }

@@ -11,6 +11,10 @@ import android.util.Log;
 public abstract class SingleFragmentActivity extends AppCompatActivity {
     protected abstract Fragment createFragment();
 
+    protected String TAG() {
+        return this.getClass().toString();
+    }
+
     @LayoutRes
     protected int getLayoutResId() {
         return R.layout.activity_masterdetail;

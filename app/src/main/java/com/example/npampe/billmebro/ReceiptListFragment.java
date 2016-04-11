@@ -34,7 +34,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ReceiptListFragment extends Fragment {
+
     private static final String TAG = "Receipt_List_Fragment";
+
     @Bind(R.id.receipt_recycler_view)
     RecyclerView mRecyclerView;
 
@@ -142,10 +144,7 @@ public class ReceiptListFragment extends Fragment {
     }
 
     public void updateUI() {
-
         if (mAdapter == null) {
-            //Log.d(TAG, "updateUI: receipts size = " + receipts.size());
-
             mAdapter = new MyAdapter(getActivity().getApplicationContext(), items);
             mRecyclerView.setAdapter(mAdapter);
         } else {
@@ -328,14 +327,12 @@ public class ReceiptListFragment extends Fragment {
         // onCreate ...
         @Override
         public ReceiptParentViewHolder onCreateParentViewHolder(ViewGroup parentViewGroup) {
-            Log.d(TAG, "onCreateParentViewHolder: inflating parent holder");
             View recipeView = mInflator.inflate(R.layout.list_item_receipt_parent, parentViewGroup, false);
             return new ReceiptParentViewHolder(recipeView);
         }
 
         @Override
         public ReceiptChildViewHolder onCreateChildViewHolder(ViewGroup childViewGroup) {
-            Log.d(TAG, "onCreateChildViewHolder: inflating child holder");
             View ingredientView = mInflator.inflate(R.layout.list_item_receipt_child, childViewGroup, false);
             return new ReceiptChildViewHolder(ingredientView);
         }

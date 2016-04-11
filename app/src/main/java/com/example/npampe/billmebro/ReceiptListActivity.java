@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-public class ReceiptListActivity extends SingleFragmentActivity implements ReceiptFragment.Callbacks, ReceiptListFragment.Callbacks {
+public class ReceiptListActivity extends SingleFragmentActivity
+        implements ReceiptFragment.Callbacks, ReceiptListFragment.Callbacks {
 
     private static final String TAG = "Receipt_List_Activity";
 

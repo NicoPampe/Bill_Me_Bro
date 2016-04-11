@@ -18,7 +18,7 @@ public class EditReceiptFragment extends Fragment {
 
         ReceiptsList rl = new ReceiptsList(getActivity());
 
-        rl.nukeIt();
+        // rl.nukeIt();
 
         return view;
     }
