@@ -28,11 +28,6 @@
                   android:label="Receipt Pager Activity"
                   android:parentActivityName=".ReceiptListActivity"/>
 
-        <activity
-            android:name=".ReceiptEditActivity"
-            android:label="Edit an Activity"
-            android:parentActivityName=".ReceiptListActivity" />
-
     </application>
 
 </manifest>

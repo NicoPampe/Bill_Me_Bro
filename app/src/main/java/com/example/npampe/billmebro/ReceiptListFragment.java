@@ -265,7 +265,9 @@ public class ReceiptListFragment extends Fragment {
 
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                if (e1.getX() - e2.getX() > 100 && Math.abs(velocityX) > 150) {
+                final int swipeThresh = 75;
+                final int minDist = 50;
+                if (e1.getX() - e2.getX() > minDist && Math.abs(velocityX) > swipeThresh) {
                     Log.d(TAG, "onFling: Right -> Left");
 
                     // Show/enable edit button
@@ -281,7 +283,7 @@ public class ReceiptListFragment extends Fragment {
                     });
                     return true;
                 }
-                else if (e2.getX() - e1.getX() > 100 && Math.abs(velocityX) > 150) {
+                else if (e2.getX() - e1.getX() > minDist && Math.abs(velocityX) > swipeThresh) {
                     Log.d(TAG, "onFling: Left -> Right");
 
                     // Hide/disable edit button
@@ -310,7 +312,7 @@ public class ReceiptListFragment extends Fragment {
             mReceiptChildTextView = (TextView) itemView.findViewById(R.id.list_item_receipt_child_text_view);
             mEditButton = (Button) itemView.findViewById(R.id.list_item_receipt_child_edit_button);
 
-            mReceiptChildTextView.setOnTouchListener(new View.OnTouchListener() {
+            itemView.findViewById(R.id.list_item_receipt_child).setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     Log.d(TAG, "onTouch: ");
