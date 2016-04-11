@@ -135,9 +135,9 @@ public class ReceiptsList {
         String uuidStr = receipt.getId().toString();
         ContentValues values = getContentValues(receipt);
 
-        mdb.update(ReceiptTable.NAME, values,
-                ReceiptTable.Cols.UUID + " = ?",
-                new String[]{uuidStr});
+//        mdb.update(ReceiptTable.NAME, values,
+//                ReceiptTable.Cols.UUID + " = ?",
+//                new String[]{uuidStr});
     }
 
     /**

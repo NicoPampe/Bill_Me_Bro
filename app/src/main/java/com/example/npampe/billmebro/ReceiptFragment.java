@@ -1,6 +1,7 @@
 package com.example.npampe.billmebro;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -56,7 +57,7 @@ public class ReceiptFragment extends Fragment {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     mReceipt.setTitle(s.toString());
-                    updateCrime();
+                    updateReceipt();
                 }
 
                 @Override
@@ -67,15 +68,15 @@ public class ReceiptFragment extends Fragment {
         return v;
     }
 
-    private void updateCrime() {
+    private void updateReceipt() {
         ReceiptsList.get(getActivity()).updateReceipt(mReceipt);
         mCallbacks.onReceiptUpdated(mReceipt);
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mCallbacks = (Callbacks) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
     }
 
     @Override
