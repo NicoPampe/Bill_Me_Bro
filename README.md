@@ -50,9 +50,39 @@ features, but the database, notifications, camera,
 and touch events are the priority components. 
 --------------------------------------------
 
+HOW TO RUN THE APP
+    simply open the project in Android studios
+    let gradle build the project
+    Run the project, should build on device
+
+HOW TO NAVIGATE THE APP
+    Opening screen shows a username & password
+    Simply click Log In (text field is blank)
+
+    In the next activity, two fragments are visable
+    Left is a recyle view of receipts
+        The receipts are grouped by dates
+        Drop down menus show the information
+        Clickin on a receipt show a preview
+        Swiping left shows an Edit button
+    Right is the Edit receipt fragment
+        Contains: Title, picture, date, time, 
+        location, contributors, conflicts
+
+--------------------------------------------
+
 ////////////////
 // KNOWN BUGS //
 ////////////////
 1) DataBase does not actually get writen to.
     Causes the receipt list to never update.
     Receipts don't change.
+
+////////////////////////////
+// UNIMPLEMENTED FEATURES //
+////////////////////////////
+1) Button to take picture doesn't start activity
+
+2) Button to open datepick
+
+3) Button to open timepicker
