@@ -4,6 +4,7 @@ package com.example.npampe.billmebro;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -33,8 +34,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ReceiptListFragment extends Fragment {
-
     private static final String TAG = "Receipt_List_Fragment";
+    private static final String DIALOG_PREVIEW = "DialogPreview";
 
     @Bind(R.id.receipt_recycler_view)
     RecyclerView mRecyclerView;
@@ -215,8 +216,10 @@ public class ReceiptListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (isExpanded()) {
+                        mArrowExpandImageView.setImageResource(R.drawable.arrow_down_float);
                         collapseView();
                     } else {
+                        mArrowExpandImageView.setImageResource(R.drawable.arrow_up_float);
                         expandView();
                     }
                 }
@@ -250,6 +253,9 @@ public class ReceiptListFragment extends Fragment {
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
+                FragmentManager fm = getFragmentManager();
+                ReceiptPreviewDialog dialog = new ReceiptPreviewDialog();
+                dialog.show(fm, DIALOG_PREVIEW);
                 return false;
             }
 
@@ -277,7 +283,6 @@ public class ReceiptListFragment extends Fragment {
                         public void onClick(View v) {
                             Toast.makeText(getActivity().getApplicationContext(), "EDIT: " + mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
                             updateUI();
-                            // TODO:
                             mCallbacks.onReceiptSelected(mReceipt);
                         }
                     });

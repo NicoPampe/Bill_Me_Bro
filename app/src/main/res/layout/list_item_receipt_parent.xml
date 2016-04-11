@@ -24,6 +24,6 @@
         android:layout_weight="1"
         android:layout_margin="8dp"
         android:background="@android:color/transparent"
-        android:src="@android:drawable/arrow_down_float" />
+        android:src="@drawable/arrow_down_float" />
 
 </LinearLayout>

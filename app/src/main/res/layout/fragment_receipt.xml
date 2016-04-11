@@ -3,14 +3,125 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-    <EditText
-        android:id="@+id/receipt_title_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="25dp"
-        android:text="Title: "
-        android:textSize="16dp"
-        android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title: "
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+
+            <!-- TODO: ID BELOW NEEDS TO BE CHANGED - LEFT AS IS FOR AlphaRelease-->
+            <EditText
+
+                android:id="@+id/receipt_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Receipt Title"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Date: "/>
+
+            <Button
+                android:id="@+id/receipt_date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open DatePicker"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Time: "/>
+
+            <Button
+                android:id="@+id/receipt_time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open TimePicker"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Location: "/>
+
+            <EditText
+                android:id="@+id/receipt_location_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Location of Purchase"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Contributor(s): "/>
+
+            <TextView
+                android:id="@+id/receipt_contributors_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="List of Contributing Members Here"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Conflict(s): "/>
+
+            <TextView
+                android:id="@+id/receipt_conflicts_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="List of conflicts (late/did not pay) Here"/>
+        </LinearLayout>
+
 
 </LinearLayout>
