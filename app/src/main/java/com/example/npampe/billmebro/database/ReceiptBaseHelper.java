@@ -1,31 +1,43 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
 
 public class ReceiptBaseHelper extends SQLiteOpenHelper {
-    private static final int VERSION = 1;
-    private static final String DATABAE_NAME = "receiptBase.db";
+
+    public static final int VERSION = 1;
+    public static final String DATABASE_NAME = "receipt_list.db";
+
+    private static final String TAG = "ReceiptBaseHelper";
 
     public ReceiptBaseHelper(Context context) {
-        super(context, DATABAE_NAME, null, VERSION);
+        super(context, DATABASE_NAME, null, VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.i(TAG, "Creating new receipt database");
         db.execSQL("create table " + ReceiptTable.NAME + "(" +
-                " _id integer primary key autoincrement, " +
+                "_id integer primary key autoincrement, " +
                 ReceiptTable.Cols.UUID + ", " +
                 ReceiptTable.Cols.TITLE + ", " +
                 ReceiptTable.Cols.DATE + ", " +
-                ReceiptTable.Cols.TOTOAL + ")");
+                ReceiptTable.Cols.TOTAL + ")");
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        // Do nothing
     }
+
 }

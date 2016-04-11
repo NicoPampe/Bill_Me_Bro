@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.npampe.billmebro.database.ReceiptBaseHelper;
 import com.example.npampe.billmebro.database.ReceiptDbSchema;
 
 import java.util.ArrayList;
@@ -17,26 +18,33 @@ import java.util.UUID;
  * Methods to modify and receive information about the list.
  */
 public class ReceiptsList {
-    private static final String TAG = "Receipts_List";
+
+    private static final String TAG = "ReceiptsList";
+
     private static ReceiptsList sReceiptsList;
 
-    private List<Receipt> mReceipts;
+    private List<Receipt> mReceipts = new ArrayList<>();
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
     /**
      * Non static Receipt List constructor
-     * @param context
+     * @param context The applicaton context.
      */
     public ReceiptsList(Context context) {
-        mReceipts = new ArrayList<>();
         mContext = context.getApplicationContext();
-        mDatabase = new ReceiptBaseHelper(mContext).getWritableDatabase();
+        mDatabase = new ReceiptBaseHelper(mContext)
+                .getWritableDatabase();
+    }
+
+    public void nukeIt() {
+        Log.i(TAG, "Deleting database!");
+        mContext.deleteDatabase(ReceiptBaseHelper.DATABASE_NAME);
     }
 
     /**
      * Receipt constructor
-     * @param context
+     * @param context The applicaton context.
      * @return
      */
     public static ReceiptsList get(Context context) {
@@ -115,7 +123,7 @@ public class ReceiptsList {
         values.put(ReceiptDbSchema.ReceiptTable.Cols.UUID, receipt.getId().toString());
         values.put(ReceiptDbSchema.ReceiptTable.Cols.TITLE, receipt.getTitle());
         values.put(ReceiptDbSchema.ReceiptTable.Cols.DATE, receipt.getDate().getTime());
-        values.put(ReceiptDbSchema.ReceiptTable.Cols.TOTOAL, receipt.getTotal());
+        values.put(ReceiptDbSchema.ReceiptTable.Cols.TOTAL, receipt.getTotal());
 
         return values;
     }

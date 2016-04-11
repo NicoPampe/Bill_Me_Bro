@@ -16,6 +16,10 @@ public class EditReceiptFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.edit_receipt_fragment, container, false);
 
+        ReceiptsList rl = new ReceiptsList(getActivity());
+
+        rl.nukeIt();
+
         return view;
     }
 
