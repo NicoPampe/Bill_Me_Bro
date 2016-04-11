@@ -92,6 +92,31 @@ public class ReceiptListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // Make some fake data.
+        ReceiptsList rl = new ReceiptsList(getActivity());
+
+        // Our db should stay small.
+        if (!rl.getReceipts().isEmpty()) {
+            Log.i(TAG, "database is not empty! Nuking it.");
+            rl.nukeIt();
+        }
+
+        // Now add in our fake data.
+        List<Receipt> receipts = Arrays.asList(new Receipt("Receipt A"),
+                new Receipt("Receipt B"),
+                new Receipt("Receipt C"),
+                new Receipt("Receipt D"));
+
+        for (Receipt receipt : receipts) {
+            rl.addReceipt(receipt);
+        }
+
+        rl.addReceipt(receipts.get(0));
+        rl.removeReceipt(receipts.get(0));
+
+        // </ fake data >
+
         updateUI();
         return view;
     }
@@ -151,13 +176,6 @@ public class ReceiptListFragment extends Fragment {
         }
     }
 
-    public void addReceiptToReceipList() {
-        Receipt receipt = new Receipt();
-        ReceiptsList.get(getActivity()).addReceipt(receipt);
-        updateUI();
-        mCallbacks.onReceiptSelected(receipt);
-    }
-
     public class ReceiptParentListItem implements ParentListItem {
         private List mReceipts;
         private String mDate;
@@ -183,14 +201,16 @@ public class ReceiptListFragment extends Fragment {
     }
 
     public class ReceiptParentViewHolder extends ParentViewHolder {
-        private TextView mRecipeTextView;
-        private ImageView mArrowExpandImageView;
+        @Bind(R.id.list_item_receipt_parent_text_view)
+        TextView mRecipeTextView;
+
+        @Bind(R.id.list_item_receipt_parent_drop_down_button)
+        ImageView mArrowExpandImageView;
 
         public ReceiptParentViewHolder(View itemView) {
             super(itemView);
-            mRecipeTextView = (TextView) itemView.findViewById(R.id.list_item_receipt_parent_text_view);
+            ButterKnife.bind(this, itemView);
 
-            mArrowExpandImageView = (ImageView) itemView.findViewById(R.id.list_item_receipt_parent_drop_down_button);
             mArrowExpandImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -205,7 +225,7 @@ public class ReceiptListFragment extends Fragment {
 
         @Override
         public boolean shouldItemViewClickToggleExpansion() {
-            return false;
+            return true;
         }
 
         public void bind(ReceiptParentListItem parentItem) {
@@ -217,13 +237,6 @@ public class ReceiptListFragment extends Fragment {
         private TextView mReceiptChildTextView;
         private Button mEditButton;
         private Receipt mReceipt;
-
-//        @Override
-//        public void onClick(View v) {
-//
-//            Toast.makeText(getActivity().getApplicationContext(), mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
-//            mCallbacks.onReceiptSelected(mReceipt);
-//        }
 
         private final GestureDetector detector = new GestureDetector(new GestureDetector.OnGestureListener() {
             @Override

@@ -1,12 +1,14 @@
 package com.example.npampe.billmebro;
 
-import android.text.format.Time;
-
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-public class Receipt {
+public class Receipt
+    implements Serializable {
+    private static final String TAG = "Receipt";
+
     private UUID mId = UUID.randomUUID();
     private String mTitle;
     private double mTotal;
@@ -18,19 +20,6 @@ public class Receipt {
     // TODO: Initialize list of users
     // TODO: Initialize list of conflicts
 
-    public Receipt() {
-
-    }
-
-    public Receipt(String title, double total, Date date, String place, String summary, String notes) {
-        mTitle = title;
-        mTotal = total;
-        mDate = date;
-        mPlace = place;
-        mSummary = summary;
-        mNotes = notes;
-    }
-
     public Receipt(String title) {
         mTitle = title;
 
@@ -38,10 +27,6 @@ public class Receipt {
         mDate = calendar.getTime();
     }
 
-    public Receipt(String title, Date date) {
-        mTitle = title;
-        mDate = date;
-    }
 
     public Receipt(UUID uuid) {
         mId = uuid;

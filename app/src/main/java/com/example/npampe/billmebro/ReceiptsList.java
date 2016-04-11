@@ -43,7 +43,7 @@ public class ReceiptsList {
     }
 
     public void nukeIt() {
-        Log.i(TAG, "Deleting database!");
+        Log.i(TAG, "Nuking database!");
         mContext.deleteDatabase(ReceiptBaseHelper.DATABASE_NAME);
     }
 
