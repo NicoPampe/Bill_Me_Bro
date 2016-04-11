@@ -5,9 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
 
-/**
- * Created by Nick Pampe on 4/9/2016.
- */
+
 public class ReceiptBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String DATABAE_NAME = "receiptBase.db";

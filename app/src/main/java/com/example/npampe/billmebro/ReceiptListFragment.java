@@ -41,6 +41,10 @@ public class ReceiptListFragment extends Fragment {
     private Callbacks mCallbacks;
     private MyAdapter mAdapter;
 
+    // For purposes of storing example receipts
+    // TODO: Remove after further implementation
+    List<ParentListItem> items;
+
     public interface Callbacks {
         void onReceiptSelected(Receipt receipt);
     }
@@ -68,6 +72,7 @@ public class ReceiptListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        prepareExampleReceipts();
     }
 
     /**
@@ -112,7 +117,7 @@ public class ReceiptListFragment extends Fragment {
         updateUI();
     }
 
-    public void updateUI() {
+    public void prepareExampleReceipts() {
         List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
 
         // For Alpha Release Demonstration Purposes Only
@@ -123,13 +128,20 @@ public class ReceiptListFragment extends Fragment {
         }
 
         List<Receipt> receipts1 = Arrays.asList(new Receipt("Receipt C"), new Receipt("Receipt D"));
-
+        ReceiptsList.get(getActivity()).clearReceipts();
+        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(0));
+        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(1));
+        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(0));
+        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(1));
         ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0, receipts0.get(0).getDate());
         ReceiptParentListItem item1 = new ReceiptParentListItem(receipts1, receipts1.get(0).getDate());
 
-        List<ParentListItem> items = new ArrayList<ParentListItem>();
+        items = new ArrayList<ParentListItem>();
         items.add(item0);
         items.add(item1);
+    }
+
+    public void updateUI() {
 
         if (mAdapter == null) {
             //Log.d(TAG, "updateUI: receipts size = " + receipts.size());
@@ -203,16 +215,17 @@ public class ReceiptListFragment extends Fragment {
         }
     }
 
-    public class ReceiptChildViewHolder extends ChildViewHolder implements View.OnClickListener {
+    public class ReceiptChildViewHolder extends ChildViewHolder {
         private TextView mReceiptChildTextView;
         private Button mEditButton;
         private Receipt mReceipt;
 
-        @Override
-        public void onClick(View v) {
-            updateUI();
-            mCallbacks.onReceiptSelected(mReceipt);
-        }
+//        @Override
+//        public void onClick(View v) {
+//
+//            Toast.makeText(getActivity().getApplicationContext(), mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
+//            mCallbacks.onReceiptSelected(mReceipt);
+//        }
 
         private final GestureDetector detector = new GestureDetector(new GestureDetector.OnGestureListener() {
             @Override
@@ -224,14 +237,8 @@ public class ReceiptListFragment extends Fragment {
             public void onShowPress(MotionEvent e) {
             }
 
-            /**
-             * implements the View.onSingleTapUp
-             * @param e
-             * @return
-             */
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                Toast.makeText(getActivity().getApplicationContext(), mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
                 return false;
             }
 
@@ -258,7 +265,7 @@ public class ReceiptListFragment extends Fragment {
                             Toast.makeText(getActivity().getApplicationContext(), "EDIT: " + mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
                             updateUI();
                             // TODO:
-//                            mCallbacks.onReceiptSelected(mReceipt);
+                           mCallbacks.onReceiptSelected(mReceipt);
                         }
                     });
                     return true;
@@ -271,7 +278,7 @@ public class ReceiptListFragment extends Fragment {
                     mEditButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            // Deactivate edit buttons onClick functionality
                         }
                     });
                     return false;
@@ -308,6 +315,7 @@ public class ReceiptListFragment extends Fragment {
         }
     }
 
+    // Clean up
     public class MyAdapter extends ExpandableRecyclerAdapter<ReceiptParentViewHolder, ReceiptChildViewHolder> {
 
         private LayoutInflater mInflator;
@@ -345,54 +353,4 @@ public class ReceiptListFragment extends Fragment {
             receiptChildViewHolder.bind(receiptChild);
         }
     }
-
-//    public class ReceiptHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//        private Receipt mReceipt;
-//        @Bind(R.id.receipt_title_text_view)
-//        TextView mTitleTextView;
-//
-//        public ReceiptHolder(View itemView) {
-//            super(itemView);
-//            itemView.setOnClickListener(this);
-//            ButterKnife.bind(this, itemView);
-//        }
-//
-//        public void bindReceipt(Receipt receipt) {
-//            mReceipt = receipt;
-//            mTitleTextView.setText(mReceipt.getTitle());
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            // Do nothing
-//        }
-//    }
-//    public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptHolder> {
-//        private List<Receipt> mReceipts;
-//
-//        public ReceiptAdapter(List<Receipt> receipts) {
-//            Log.d(TAG, "ReceiptAdapter: receipts size = " + receipts.size());
-//            mReceipts = receipts;
-//        }
-//
-//        @Override
-//        public ReceiptHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-//            View view = layoutInflater
-//                    .inflate(R.layout.list_item_receipt, parent, false);
-//            return new ReceiptHolder(view);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(ReceiptHolder holder, int position) {
-//            Log.d(TAG, "ReceiptAdapter::onBindViewHolder: pos = " + position);
-//            Receipt receipt = mReceipts.get(position);
-//            holder.bindReceipt(receipt);
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            return mReceipts.size();
-//        }
-//    }
 }

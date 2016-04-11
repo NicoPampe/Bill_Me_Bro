@@ -3,6 +3,7 @@ package com.example.npampe.billmebro;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.npampe.billmebro.database.ReceiptDbSchema;
 
@@ -11,11 +12,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by Nick Pampe on 4/9/2016.
+ *
  * Receipts List contains the List of Receipts in the group.
  * Methods to modify and receive information about the list.
  */
 public class ReceiptsList {
+    private static final String TAG = "Receipts_List";
     private static ReceiptsList sReceiptsList;
 
     private List<Receipt> mReceipts;
@@ -49,6 +51,7 @@ public class ReceiptsList {
      * @param r
      */
     public void addReceipt(Receipt r) {
+        Log.d(TAG, "addReceipt: " + r.getTitle());
         mReceipts.add(r);
     }
 
@@ -82,6 +85,7 @@ public class ReceiptsList {
     public Receipt getReceipt(UUID id) {
         for (Receipt receipt : mReceipts) {
             if (receipt.getId().equals(id)) {
+                Log.d(TAG, "getReceipt: uuid = " + id);
                 return  receipt;
             }
         }
@@ -114,5 +118,9 @@ public class ReceiptsList {
         values.put(ReceiptDbSchema.ReceiptTable.Cols.TOTOAL, receipt.getTotal());
 
         return values;
+    }
+
+    public void clearReceipts() {
+        mReceipts.clear();
     }
 }

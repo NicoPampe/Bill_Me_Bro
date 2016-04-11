@@ -6,6 +6,8 @@ import android.util.Log;
 
 public class ReceiptListActivity extends SingleFragmentActivity implements ReceiptFragment.Callbacks, ReceiptListFragment.Callbacks {
 
+    private static final String TAG = "Receipt_List_Activity";
+
     @Override
     protected Fragment createFragment() {
         return new ReceiptListFragment();
@@ -13,12 +15,12 @@ public class ReceiptListActivity extends SingleFragmentActivity implements Recei
 
     @Override
     public void onReceiptSelected(Receipt receipt) {
-        Log.d("TAG", "onReceiptSelected: checking");
+        Log.d(TAG, "onReceiptSelected: checking");
         if (findViewById(R.id.detail_fragment_container) == null) {
             Intent intent = ReceiptPagerActivity.newIntent(this, receipt.getId());
             startActivity(intent);
         } else {
-            Log.d("TAG", "onReceiptSelected: Updated the edit receipt frag");
+            Log.d(TAG, "onReceiptSelected: Updated the edit receipt frag");
             Fragment newRecetiptDetails = ReceiptFragment.newInstance(receipt.getId());
             getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, newRecetiptDetails).commit();
         }
@@ -32,6 +34,6 @@ public class ReceiptListActivity extends SingleFragmentActivity implements Recei
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activiity_twopane;
+        return R.layout.activity_masterdetail;
     }
 }

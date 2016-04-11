@@ -8,15 +8,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by Nick Pampe on 4/10/2016.
- */
+
 public class ReceiptPagerActivity extends AppCompatActivity implements ReceiptFragment.Callbacks {
     private static final String EXTRA_RECEIPT_ID = "com.example.npmape.criminalintent.crime_id";
+    private static final String TAG = "Receipt_Pager_Activity";
     private ViewPager mViewPager;
     private List<Receipt> mReceipts;
 
@@ -58,9 +58,11 @@ public class ReceiptPagerActivity extends AppCompatActivity implements ReceiptFr
         for (int i = 0; i < mReceipts.size(); i++) {
             if (mReceipts.get(i).getId().equals(crimeID)) {
                 mViewPager.setCurrentItem(i);
+                Log.d(TAG, "onCreate: mReceipt's UUID = " + crimeID);
                 break;
             }
         }
+
 
     }
 

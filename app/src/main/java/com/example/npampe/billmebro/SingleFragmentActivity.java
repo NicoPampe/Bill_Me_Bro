@@ -8,15 +8,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-/**
- * Created by Jspie on 2/17/2016.
- */
 public abstract class SingleFragmentActivity extends AppCompatActivity {
     protected abstract Fragment createFragment();
 
     @LayoutRes
     protected int getLayoutResId() {
-        return R.layout.activity_fragment;
+        return R.layout.activity_masterdetail;
     }
 
     @Override
