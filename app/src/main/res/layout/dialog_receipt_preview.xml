@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<LinearLayout
+    android:id="@+id/dialog_receipt_preview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -10,24 +14,17 @@
         android:padding="10dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title: "
-            android:textSize="16dp"
-            android:textStyle="bold"/>
-
-        <!-- TODO: ID BELOW NEEDS TO BE CHANGED - LEFT AS IS FOR AlphaRelease-->
-        <EditText
-
-            android:id="@+id/receipt_title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Receipt Title"/>
-    </LinearLayout>
+            android:textStyle="bold"
+            android:text="Title: "/>
 
-    <include
-        layout="@layout/view_camera"
-        />
+        <TextView
+            android:id="@+id/preview_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BLANK Title"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -41,11 +38,11 @@
             android:textStyle="bold"
             android:text="Date: "/>
 
-        <Button
-            android:id="@+id/receipt_date_picker"
+        <TextView
+            android:id="@+id/preview_date_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Open DatePicker"/>
+            android:text="BLANK Date"/>
     </LinearLayout>
 
 
@@ -61,11 +58,11 @@
             android:textStyle="bold"
             android:text="Time: "/>
 
-        <Button
-            android:id="@+id/receipt_time_picker"
+        <TextView
+            android:id="@+id/preview_time_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Open TimePicker"/>
+            android:text="BLANK Time"/>
     </LinearLayout>
 
 
@@ -81,11 +78,11 @@
             android:textStyle="bold"
             android:text="Location: "/>
 
-        <EditText
-            android:id="@+id/receipt_location_text_view"
+        <TextView
+            android:id="@+id/preview_location_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Location of Purchase"/>
+            android:text="BLANK Location"/>
     </LinearLayout>
 
 
@@ -102,10 +99,10 @@
             android:text="Contributor(s): "/>
 
         <TextView
-            android:id="@+id/receipt_contributors_text_view"
+            android:id="@+id/preview_contributors_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="List of Contributing Members Here"/>
+            android:text="BLANK list of contributing members"/>
     </LinearLayout>
 
     <LinearLayout
@@ -121,9 +118,10 @@
             android:text="Conflict(s): "/>
 
         <TextView
-            android:id="@+id/receipt_conflicts_text_view"
+            android:id="@+id/preview_conflicts_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="List of conflicts (late/did not pay) Here"/>
+            android:text="BLANK list conflicts (late/did not pay)"/>
     </LinearLayout>
+
 </LinearLayout>
