@@ -4,12 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.npampe.billmebro.database.ReceiptBaseHelper;
 import com.example.npampe.billmebro.database.ReceiptCursorWrapper;
 import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -123,6 +125,21 @@ public class ReceiptsList {
         }
 
         return null;
+    }
+
+    /**
+     * Gets the photo file from device
+     * @param receipt
+     * @return
+     */
+    public File getPhotoFile(Receipt receipt) {
+        File externalFilesDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        if (externalFilesDir == null) {
+            return null;
+        }
+
+        return new File(externalFilesDir, receipt.getPhotoFilename());
     }
 
     /**

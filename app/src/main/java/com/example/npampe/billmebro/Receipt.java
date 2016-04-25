@@ -87,4 +87,8 @@ public class Receipt
     public UUID getId() {
         return mId;
     }
+
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
+    }
 }
