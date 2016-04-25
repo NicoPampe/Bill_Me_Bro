@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -19,10 +22,12 @@ import android.widget.ImageView;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Date;
 import java.util.UUID;
 
 public class ReceiptFragment extends Fragment {
     private static final String ARG_RECEIPT_ID = "receipt_id";
+    private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 2;
 
     private Receipt mReceipt;
@@ -103,6 +108,7 @@ public class ReceiptFragment extends Fragment {
         });
 
         mPhotoView = (ImageView)v.findViewById(R.id.receipt_photo);
+        updatePhotoView();
 
         return v;
     }
@@ -124,10 +130,46 @@ public class ReceiptFragment extends Fragment {
         mCallbacks = null;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mReceipt.setDate(date);
+            updateReceipt();
+            updateDate();
+        } else if (requestCode == REQUEST_PHOTO) {
+            updateReceipt();
+            updatePhotoView();
+        }
+    }
+
+    /**
+     * Update the receipts date
+     */
+    private void updateDate() {
+        // TODO: implement updateDate
+    }
+
     /**
      * Required interface for hositng act
      */
     public interface Callbacks {
         void onReceiptUpdated(Receipt receipt);
+    }
+
+    /**
+     * Updates the Photo of the receipt
+     */
+    private void updatePhotoView() {
+        if (mPhotoFile == null || !mPhotoFile.exists()) {
+            mPhotoView.setImageDrawable(null);
+        } else {
+            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+            mPhotoView.setImageBitmap(bitmap);
+        }
     }
 }
