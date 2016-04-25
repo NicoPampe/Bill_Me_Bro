@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import java.util.UUID;
 
 public class ReceiptFragment extends Fragment {
     private static final String ARG_RECEIPT_ID = "receipt_id";
+    private static final String DIALOG_PICTURE = "DialogPicture";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 2;
 
@@ -88,6 +90,7 @@ public class ReceiptFragment extends Fragment {
         /**
          * Photo creation and fire intent to take photo
          */
+        // first, photo button
         mPhotoButton = (ImageButton)v.findViewById(R.id.receipt_camera);
         final Intent caputreImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -107,7 +110,16 @@ public class ReceiptFragment extends Fragment {
             }
         });
 
+        // Next, photo View
         mPhotoView = (ImageView)v.findViewById(R.id.receipt_photo);
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                PictureDialogFragment dialog = PictureDialogFragment.newInstance(mPhotoView);
+                dialog.show(manager, DIALOG_PICTURE);
+            }
+        });
         updatePhotoView();
 
         return v;

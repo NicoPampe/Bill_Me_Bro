@@ -1,6 +1,7 @@
 package com.example.npampe.billmebro;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 

@@ -2,6 +2,7 @@ package com.example.npampe.billmebro;
 
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -253,9 +254,14 @@ public class ReceiptListFragment extends Fragment {
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                FragmentManager fm = getFragmentManager();
-                ReceiptPreviewDialog dialog = new ReceiptPreviewDialog();
-                dialog.show(fm, DIALOG_PREVIEW);
+                if (getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    updateUI();
+                    mCallbacks.onReceiptSelected(mReceipt);
+                } else {
+                    FragmentManager fm = getFragmentManager();
+                    ReceiptPreviewDialog dialog = new ReceiptPreviewDialog();
+                    dialog.show(fm, DIALOG_PREVIEW);
+                }
                 return false;
             }
 
@@ -281,7 +287,6 @@ public class ReceiptListFragment extends Fragment {
                     mEditButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getActivity().getApplicationContext(), "EDIT: " + mReceiptChildTextView.getText(), Toast.LENGTH_SHORT).show();
                             updateUI();
                             mCallbacks.onReceiptSelected(mReceipt);
                         }
