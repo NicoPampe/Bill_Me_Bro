@@ -6,4 +6,6 @@
     <string name="photo_dialog_title">Photo</string>
     <string name="empty_group_list">Currently not tracking any groups.\nAdd a group now!</string>
     <string name="new_group">New Group</string>
+    <string name="new_receipt">New Receipt</string>
+    <string name="delete_crime">Delete Crime</string>
 </resources>

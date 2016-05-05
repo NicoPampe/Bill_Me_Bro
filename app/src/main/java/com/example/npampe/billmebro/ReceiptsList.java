@@ -76,7 +76,8 @@ public class ReceiptsList {
      * @param receipt
      */
     public void addReceipt(Receipt receipt) {
-        mReceipts.add(receipt);
+        ContentValues values = getContentValues(receipt);
+        mdb.insert(ReceiptTable.NAME, null, values);
     }
 
     /**
@@ -85,14 +86,27 @@ public class ReceiptsList {
      * @param receipt
      */
     public void removeReceipt(Receipt receipt) {
-        mReceipts.remove(mReceipts.indexOf(receipt));
+        mdb.delete(ReceiptTable.NAME, ReceiptTable.Cols.UUID + " = ?", new String[] {receipt.getId().toString()});
     }
 
     /**
      * @return the receipt list
      */
     public List<Receipt> getReceipts() {
-        return mReceipts;
+        List<Receipt> receipts = new ArrayList<>();
+
+        ReceiptCursorWrapper cursor = query(null, null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                receipts.add(cursor.getReceipt());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return receipts;
     }
 
     /**
@@ -109,12 +123,21 @@ public class ReceiptsList {
      * @return Receipt
      */
     public Receipt getReceipt(UUID id) {
-        for (Receipt receipt : mReceipts) {
-            if (receipt.getId().equals(id)) {
-                return receipt;
+        ReceiptCursorWrapper cursor = query(
+                ReceiptTable.Cols.UUID + " = ?",
+                new String[]{id.toString()}
+        );
+
+        try {
+            if (cursor.getCount() == 0) {
+                return null;
             }
+
+            cursor.moveToFirst();
+            return cursor.getReceipt();
+        } finally {
+            cursor.close();
         }
-        return null;
     }
 
     /**
@@ -138,13 +161,11 @@ public class ReceiptsList {
      * @param receipt
      */
     public void updateReceipt(Receipt receipt) {
-        Log.i(TAG, "Updating database with " + receipt);
-        for (Receipt thisRecpit : mReceipts) {
-            if (thisRecpit.getId() == receipt.getId()) {
-                int location = mReceipts.indexOf(thisRecpit);
-                mReceipts.set(location, receipt);
-            }
-        }
+        String uuidString = receipt.getId().toString();
+        ContentValues values = getContentValues(receipt);
+
+        mdb.update(ReceiptTable.NAME, values,
+                ReceiptTable.Cols.UUID + " = ?", new String[]{uuidString});
     }
 
     /**
