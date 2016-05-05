@@ -135,7 +135,7 @@ public class ReceiptsList {
     public File getPhotoFile(Receipt receipt) {
         File externalFilesDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
-        if (externalFilesDir == null) {
+        if (externalFilesDir == null || receipt == null) {
             return null;
         }
 
