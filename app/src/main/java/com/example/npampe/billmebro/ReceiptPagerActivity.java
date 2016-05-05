@@ -15,7 +15,7 @@ import java.util.UUID;
 
 
 public class ReceiptPagerActivity extends AppCompatActivity implements ReceiptFragment.Callbacks {
-    private static final String EXTRA_RECEIPT_ID = "com.example.npmape.criminalintent.crime_id";
+    private static final String EXTRA_RECEIPT_ID = "com.example.npmape.billmebro";
     private static final String TAG = "Receipt_Pager_Activity";
     private ViewPager mViewPager;
     private List<Receipt> mReceipts;
@@ -63,8 +63,6 @@ public class ReceiptPagerActivity extends AppCompatActivity implements ReceiptFr
                 break;
             }
         }
-
-
     }
 
     @Override

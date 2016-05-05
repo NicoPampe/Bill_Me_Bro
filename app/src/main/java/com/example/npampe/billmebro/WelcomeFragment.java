@@ -33,7 +33,7 @@ public class WelcomeFragment extends Fragment {
         mLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ReceiptListActivity.class);
+                Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
                 startActivity(intent);
             }
         });

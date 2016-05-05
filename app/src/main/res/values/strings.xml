@@ -4,4 +4,6 @@
 
     <string name="date_picker_title">Date of crime: </string>
     <string name="photo_dialog_title">Photo</string>
+    <string name="empty_group_list">Currently not tracking any groups.\nAdd a group now!</string>
+    <string name="new_group">New Group</string>
 </resources>

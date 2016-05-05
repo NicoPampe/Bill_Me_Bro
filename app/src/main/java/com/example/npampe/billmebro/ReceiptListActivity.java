@@ -1,14 +1,19 @@
 package com.example.npampe.billmebro;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+
+import java.util.UUID;
 
 public class ReceiptListActivity extends SingleFragmentActivity
         implements ReceiptFragment.Callbacks, ReceiptListFragment.Callbacks {
 
     private static final String TAG = "Receipt_List_Activity";
+    private static final String ARG_GROUP_ID = "group_id";
 
     @Override
     protected Fragment createFragment() {
