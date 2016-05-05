@@ -21,7 +21,7 @@ public class GroupManagerActivity extends SingleFragmentActivity
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_masterdetail;
+        return R.layout.activity_fragment;
     }
 
     /** Opens detail view of group selected

@@ -89,7 +89,7 @@ public class GroupFragment extends Fragment {
             ArrayList<String> members = mGroup.getMembers();
             String membersString = "";
             if (members.isEmpty()) {
-                mGroupMembersField.setText(R.string.add_group_members_edit_text_hint);
+                mGroupMembersField.setHint(R.string.add_group_members_edit_text_hint);
             }
             else {
                 for (int i = 0; i < members.size(); i++) {

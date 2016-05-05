@@ -49,6 +49,7 @@ public class GroupListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
+
         if (!GroupsList.get(getActivity()).getGroups().isEmpty()) {
             setHasOptionsMenu(true);
         }
@@ -192,14 +193,6 @@ public class GroupListFragment extends Fragment {
             public boolean onSingleTapUp(MotionEvent e) {
                 Intent intent = new Intent(getActivity(), ReceiptListActivity.class);
                 startActivity(intent);
-//                if (getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//                    updateUI();
-//                    mCallbacks.onGroupSelected(mGroup);
-//                } else {
-//                    FragmentManager fm = getFragmentManager();
-//                    ReceiptPreviewDialog dialog = new ReceiptPreviewDialog();
-//                    dialog.show(fm, DIALOG_PREVIEW);
-//                }
                 return false;
             }
 

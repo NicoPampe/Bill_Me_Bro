@@ -7,7 +7,7 @@
     <string name="empty_group_list">Currently not tracking any groups.\nAdd a group now!</string>
     <string name="new_group">New Group</string>
     <string name="group_type_hint">Work, Personal, etc..</string>
-    <string name="add_group_members_edit_text_hint">John Spielvogel\nNico Pampe\nChris Butler</string>
+    <string name="add_group_members_edit_text_hint">First Member\nSecond Member\nThird Member</string>
     <string name="group_members_text_view">Group Member(s):</string>
     <string name="group_type_text_view">Group Type:</string>
     <string name="group_name_edit_text_hint">Group Name</string>
