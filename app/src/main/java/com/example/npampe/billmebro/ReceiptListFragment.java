@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
+import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -356,8 +356,8 @@ public class ReceiptListFragment extends Fragment {
 
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                final int swipeThresh = 75;
-                final int minDist = 50;
+                final int swipeThresh = 0;
+                final int minDist = 1;
                 if (e1.getX() - e2.getX() > minDist && Math.abs(velocityX) > swipeThresh) {
                     Log.d(TAG, "onFling: Right -> Left");
 
@@ -399,6 +399,12 @@ public class ReceiptListFragment extends Fragment {
             super(itemView);
             mReceiptChildTextView = (TextView) itemView.findViewById(R.id.list_item_receipt_child_text_view);
             mEditButton = (Button) itemView.findViewById(R.id.list_item_receipt_child_edit_button);
+            itemView.findViewById(R.id.list_item_receipt_child).setOnDragListener(new View.OnDragListener() {
+                @Override
+                public boolean onDrag(View v, DragEvent event) {
+                    return false;
+                }
+            });
 
             itemView.findViewById(R.id.list_item_receipt_child).setOnTouchListener(new View.OnTouchListener() {
                 @Override
