@@ -124,7 +124,33 @@ public class ReceiptListFragment extends Fragment {
      */
     public void addReceiptToReceiptList() {
         Receipt receipt = new Receipt();
+
+        // TODO: add the receipt to the list<Receipt> of the parent layout.
         ReceiptsList.get(getActivity()).addReceipt(receipt);
+
+        /*
+        List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
+
+        // For Alpha Release Demonstration Purposes Only
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        List<Receipt> receipts1 = Arrays.asList(new Receipt("Receipt C"), new Receipt("Receipt D"));
+        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(0));
+        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(1));
+        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(0));
+        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(1));
+        ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0, receipts0.get(0).getDate());
+        ReceiptParentListItem item1 = new ReceiptParentListItem(receipts1, receipts1.get(0).getDate());
+
+        items = new ArrayList<ParentListItem>();
+        items.add(item0);
+        items.add(item1);
+        */
+
         updateUI();
         mCallbacks.onReceiptSelected(receipt);
     }
