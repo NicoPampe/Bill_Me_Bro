@@ -26,8 +26,9 @@ public class ReceiptBaseHelper extends SQLiteOpenHelper {
                 ReceiptTable.Cols.UUID + ", " +
                 ReceiptTable.Cols.TITLE + ", " +
                 ReceiptTable.Cols.DATE + ", " +
-                ReceiptTable.Cols.TOTAL + ")");
-
+                ReceiptTable.Cols.TOTAL +
+                ")"
+        );
     }
 
     @Override
