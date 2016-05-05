@@ -3,6 +3,7 @@ package com.example.npampe.billmebro;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -12,6 +13,8 @@ public class Group {
     private ArrayList<DateFormat> mDateFormats;
     private Date mDate;
     private ArrayList<Receipt> mReceipts;
+    private String mType;
+    private ArrayList<String> mMembers;
 
     public Group(String s) {
         mId = UUID.randomUUID();
@@ -19,6 +22,7 @@ public class Group {
         mDateFormats = new ArrayList<DateFormat>();
         mDateFormats.add(DateFormat.getDateInstance(DateFormat.FULL));
         mDateFormats.get(0).setTimeZone(TimeZone.getTimeZone("UTC"));
+        mMembers = new ArrayList<String>();
         mDate = new Date();
     }
 
@@ -53,5 +57,29 @@ public class Group {
 
     public void setDate(Date date) {
         mDate = date;
+    }
+
+    public String getType() {
+        return mType;
+    }
+
+    public void setType(String type) {
+        mType = type;
+    }
+
+    public ArrayList<String> getMembers() {
+        return mMembers;
+    }
+
+    public void setMembers(ArrayList<String> members) {
+        mMembers = members;
+    }
+
+    public void clearMembers() {
+        mMembers.clear();
+    }
+
+    public void addMember(String member) {
+        mMembers.add(member);
     }
 }

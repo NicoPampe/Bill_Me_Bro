@@ -321,19 +321,13 @@ public class ReceiptListFragment extends Fragment {
             super(itemView);
             mReceiptChildTextView = (TextView) itemView.findViewById(R.id.list_item_receipt_child_text_view);
             mEditButton = (Button) itemView.findViewById(R.id.list_item_receipt_child_edit_button);
-            itemView.findViewById(R.id.list_item_receipt_child).setOnDragListener(new View.OnDragListener() {
-                @Override
-                public boolean onDrag(View v, DragEvent event) {
-                    return false;
-                }
-            });
 
             itemView.findViewById(R.id.list_item_receipt_child).setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    Log.d(TAG, "onTouch: ");
-                    detector.onTouchEvent(event);
-                    return true;
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            Log.d(TAG, "onTouch: ");
+                            detector.onTouchEvent(event);
+                            return true;
                 }
             });
         }
@@ -346,7 +340,6 @@ public class ReceiptListFragment extends Fragment {
 
     // Clean up
     public class MyAdapter extends ExpandableRecyclerAdapter<ReceiptParentViewHolder, ReceiptChildViewHolder> {
-
         private LayoutInflater mInflator;
 
         public MyAdapter(Context context, List<ParentListItem> parentItemList) {

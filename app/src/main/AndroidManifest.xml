@@ -32,6 +32,9 @@
         <activity android:name=".GroupManagerActivity"
                   android:label="Group List Activity"
                   android:parentActivityName=".WelcomeActivity"/>
+        <activity android:name=".GroupPagerActivity"
+                  android:label="Group Pager Activity"
+                  android:parentActivityName=".GroupManagerActivity"/>
         <activity android:name=".ReceiptListActivity"
                   android:label="@string/app_name"
                   android:parentActivityName=".GroupManagerActivity" />

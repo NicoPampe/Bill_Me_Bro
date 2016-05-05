@@ -24,30 +24,14 @@ public class GroupManagerActivity extends SingleFragmentActivity
         return R.layout.activity_masterdetail;
     }
 
-    /** Opens detail view of group selected respective to layout used
-     *
-     * If viewing group in portrait view, crimePagerActivity is started
-     * If viewing group in list-detail landscape view, view is replaced with two pane view
+    /** Opens detail view of group selected
      *
      * @param group
      */
     @Override
     public void onGroupSelected(Group group) {
-
-        if (findViewById(R.id.detail_fragment_container) == null) {
-            Log.d(TAG, "onGroupSelected() creating portrait view");
-            Intent intent = new Intent(this, ReceiptListActivity.class);
-            startActivity(intent);
-        } else {
-            Log.d(TAG, "onGroupSelected() creating list-detail view");
-//            boolean isInLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-
-            Fragment newDetail = new ReceiptListActivity().createFragment();
-
-            getSupportFragmentManager().beginTransaction()
-                     .replace(R.id.detail_fragment_container, newDetail)
-                     .commit();
-        }
+        Intent intent = GroupPagerActivity.newIntent(this, group.getId());
+        startActivity(intent);
     }
 
     /** Updates GroupListFragments UI
@@ -56,7 +40,7 @@ public class GroupManagerActivity extends SingleFragmentActivity
      */
     @Override
     public void onGroupUpdated(Group group) {
-        Log.d(TAG, "onCrimeUpdated()");
+        Log.d(TAG, "onGroupUpdated()");
         GroupListFragment listFragment = (GroupListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         listFragment.updateUI();
     }

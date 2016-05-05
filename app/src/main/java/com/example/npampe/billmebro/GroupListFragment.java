@@ -2,17 +2,22 @@ package com.example.npampe.billmebro;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -72,10 +77,10 @@ public class GroupListFragment extends Fragment {
             mEmptyNewGroupButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Group group = new Group("Test Group");
+                    Group group = new Group("New Group");
                     GroupsList.get(getActivity()).addGroup(group);
 
-                    Intent intent = new Intent(getActivity(), ReceiptListActivity.class);
+                    Intent intent = GroupPagerActivity.newIntent(getActivity(), group.getId());
                     startActivity(intent);
                 }
             });
@@ -137,7 +142,7 @@ public class GroupListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_new_group:
-                Group group = new Group("Test Group");
+                Group group = new Group("New Group");
                 GroupsList.get(getActivity()).addGroup(group);
                 updateUI();
                 mCallbacks.onGroupSelected(group);
@@ -148,7 +153,7 @@ public class GroupListFragment extends Fragment {
         }
     }
 
-    /** Creates crimeRecyclerView's adapter or updates recyclerView if adapter already exists.
+    /** Creates groupRecyclerView's adapter or updates recyclerView if adapter already exists.
      *
      */
     public void updateUI() {
@@ -163,33 +168,118 @@ public class GroupListFragment extends Fragment {
         }
     }
 
-    /** Gets information relative to crime and binds the crimes information to respective UI components
+    /** Gets information relative to group and binds the groups information to respective UI components
      *
      */
-    private class GroupHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class GroupHolder extends RecyclerView.ViewHolder {
         private Group mGroup;
         private TextView mNameTextView;
         private TextView mDateCreatedTextView;
+        private TextView mTypeTextView;
+        private Button mEditButton;
+
+        private final GestureDetector detector = new GestureDetector(new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                Intent intent = new Intent(getActivity(), ReceiptListActivity.class);
+                startActivity(intent);
+//                if (getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//                    updateUI();
+//                    mCallbacks.onGroupSelected(mGroup);
+//                } else {
+//                    FragmentManager fm = getFragmentManager();
+//                    ReceiptPreviewDialog dialog = new ReceiptPreviewDialog();
+//                    dialog.show(fm, DIALOG_PREVIEW);
+//                }
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                final int swipeThresh = 0;
+                final int minDist = 1;
+                if (e1.getX() - e2.getX() > minDist && Math.abs(velocityX) > swipeThresh) {
+                    Log.d(TAG, "onFling: Right -> Left");
+
+                    // Show/enable edit button
+                    mEditButton.setVisibility(View.VISIBLE);
+                    mEditButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            updateUI();
+                            mCallbacks.onGroupSelected(mGroup);
+                        }
+                    });
+                    return true;
+                } else if (e2.getX() - e1.getX() > minDist && Math.abs(velocityX) > swipeThresh) {
+                    Log.d(TAG, "onFling: Left -> Right");
+
+                    // Hide/disable edit button
+                    mEditButton.setVisibility(View.INVISIBLE);
+                    mEditButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Deactivate edit buttons onClick functionality
+                        }
+                    });
+                    return false;
+                }
+
+                if (e1.getY() - e2.getY() > 100 && Math.abs(velocityY) > 200) {
+                    return false;
+                } else if (e2.getY() - e1.getY() > 100 && Math.abs(velocityY) > 200) {
+                    return false;
+                }
+                return false;
+            }
+
+        });
 
         public GroupHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
-
             mNameTextView = (TextView)
                     itemView.findViewById(R.id.list_item_group_name_text_view);
             mDateCreatedTextView = (TextView)
                     itemView.findViewById(R.id.list_item_group_date_text_view);
+            mEditButton = (Button)
+                    itemView.findViewById(R.id.list_item_group_edit_button);
+            mTypeTextView = (TextView)
+                    itemView.findViewById(R.id.list_item_group_type_text_view);
+
+            itemView.findViewById(R.id.list_item_group).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.d(TAG, "onTouch: ");
+                    detector.onTouchEvent(event);
+                    return true;
+                }
+            });
         }
 
         public void bindGroup(Group group) {
             mGroup = group;
             mNameTextView.setText(mGroup.getName());
             mDateCreatedTextView.setText(mGroup.getDate(0));
-        }
-
-        @Override
-        public void onClick(View v) {
-            mCallbacks.onGroupSelected(mGroup);
+            mTypeTextView.setText(mGroup.getType());
         }
     }
 

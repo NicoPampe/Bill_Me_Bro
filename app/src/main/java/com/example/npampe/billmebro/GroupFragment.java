@@ -12,17 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
 public class GroupFragment extends Fragment {
     private static final String ARG_GROUP_ID = "group_id";
-    private static final int REQUEST_DATE = 0;
-    private static final int REQUEST_PHOTO = 2;
-
     private Group mGroup;
     private Callbacks mCallbacks;
-    private EditText mTitleField;
+    private EditText mNameField;
+    private EditText mGroupTypeField;
+    private EditText mGroupMembersField;
 
     public static GroupFragment newInstance(UUID id) {
         Bundle args = new Bundle();
@@ -46,12 +46,12 @@ public class GroupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View v = inflater.inflate(R.layout.fragment_receipt, container, false);
+        View v = inflater.inflate(R.layout.fragment_group, container, false);
 
         if (mGroup != null) {
-            mTitleField = (EditText) v.findViewById(R.id.receipt_title_text_view);
-            mTitleField.setText(mGroup.getName());
-            mTitleField.addTextChangedListener(new TextWatcher() {
+            mNameField = (EditText) v.findViewById(R.id.group_name_edit_text);
+            mNameField.setText(mGroup.getName());
+            mNameField.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
@@ -64,6 +64,61 @@ public class GroupFragment extends Fragment {
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                }
+            });
+
+            mGroupTypeField = (EditText) v.findViewById(R.id.group_type_edit_text);
+            mGroupTypeField.setText(mGroup.getType());
+            mGroupTypeField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    mGroup.setType(s.toString());
+                    updateGroup();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+
+            mGroupMembersField = (EditText) v.findViewById(R.id.add_group_members_edit_text);
+            ArrayList<String> members = mGroup.getMembers();
+            String membersString = "";
+            if (members.isEmpty()) {
+                mGroupMembersField.setText(R.string.add_group_members_edit_text_hint);
+            }
+            else {
+                for (int i = 0; i < members.size(); i++) {
+                    membersString += members.get(i) + "\n";
+                }
+
+                mGroupMembersField.setText(membersString);
+            }
+            mGroupMembersField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String membersString = String.valueOf(s.subSequence(0, s.length()));
+                    String members[] = membersString.split("\\r?\\n");
+
+                    mGroup.clearMembers();
+
+                    for (int i = 0; i < members.length; i++) {
+                        mGroup.addMember(members[i]);
+                    }
+                    updateGroup();
                 }
             });
         }
@@ -93,21 +148,8 @@ public class GroupFragment extends Fragment {
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
-
-        if (requestCode == REQUEST_DATE) {
-            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            mGroup.setDate(date);
-            updateGroup();
-            updateDate();
-        }
     }
 
-    /**
-     * Update the receipts date
-     */
-    private void updateDate() {
-        // TODO: implement updateDate
-    }
 
     /**
      * Required interface for hositng act
