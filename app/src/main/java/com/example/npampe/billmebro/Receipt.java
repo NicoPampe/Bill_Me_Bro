@@ -20,6 +20,10 @@ public class Receipt
     // TODO: Initialize list of users
     // TODO: Initialize list of conflicts
 
+    public Receipt() {
+        this(UUID.randomUUID());
+    }
+
     public Receipt(String title) {
         mTitle = title;
 
@@ -30,6 +34,7 @@ public class Receipt
 
     public Receipt(UUID uuid) {
         mId = uuid;
+        mDate = new Date();
     }
 
     public String toString() {

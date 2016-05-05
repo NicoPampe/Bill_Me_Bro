@@ -143,6 +143,12 @@ public class ReceiptFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        ReceiptsList.get(getActivity()).updateReceipt(mReceipt);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
             return;

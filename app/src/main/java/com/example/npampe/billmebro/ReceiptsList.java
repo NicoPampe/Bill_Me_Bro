@@ -21,12 +21,24 @@ import java.util.UUID;
  * Methods to modify and receive information about the list.
  */
 public class ReceiptsList {
-
     private static final String TAG = "ReceiptsList";
 
+    /**
+     * Static variable of the ReceiptList. Shouldn't have multiple instances.
+     */
     private static ReceiptsList sReceiptsList;
 
+    /**
+     * List of receipts in the view.
+     */
+    private List<Receipt> mReceipts;
+    /**
+     * Context of the given activity
+     */
     private Context mContext;
+    /**
+     * SQLiteDatabase of the receipt list
+     */
     private SQLiteDatabase mdb;
 
     /**
@@ -35,9 +47,9 @@ public class ReceiptsList {
      * @param context The applicaton context.
      */
     public ReceiptsList(Context context) {
+        mReceipts = new ArrayList<>();
         mContext = context.getApplicationContext();
-        mdb = new ReceiptBaseHelper(mContext)
-                .getWritableDatabase();
+        mdb = new ReceiptBaseHelper(mContext).getWritableDatabase();
     }
 
     /**
@@ -64,13 +76,8 @@ public class ReceiptsList {
      * @param receipt
      */
     public void addReceipt(Receipt receipt) {
-        if (getReceipt(receipt.getId()) != null) {
-            updateReceipt(receipt);
-        } else {
-            Log.i(TAG, "Inserting into database: " + receipt);
-            ContentValues values = getContentValues(receipt);
-            mdb.insert(ReceiptTable.NAME, null, values);
-        }
+        ContentValues values = getContentValues(receipt);
+        mdb.insert(ReceiptTable.NAME, null, values);
     }
 
     /**
@@ -79,10 +86,7 @@ public class ReceiptsList {
      * @param receipt
      */
     public void removeReceipt(Receipt receipt) {
-        int updated = mdb.delete(ReceiptTable.NAME,
-                ReceiptTable.Cols.UUID + " = ?",
-                new String[]{receipt.getId().toString()});
-        Log.i(TAG, "Removed " + updated + " rows with " + receipt);
+        mdb.delete(ReceiptTable.NAME, ReceiptTable.Cols.UUID + " = ?", new String[] {receipt.getId().toString()});
     }
 
     /**
@@ -92,6 +96,7 @@ public class ReceiptsList {
         List<Receipt> receipts = new ArrayList<>();
 
         ReceiptCursorWrapper cursor = query(null, null);
+
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -101,8 +106,14 @@ public class ReceiptsList {
         } finally {
             cursor.close();
         }
-
         return receipts;
+    }
+
+    /**
+     * @return the size of the receipt list
+     */
+    public int receiptCound() {
+        return mReceipts.size();
     }
 
     /**
@@ -112,19 +123,21 @@ public class ReceiptsList {
      * @return Receipt
      */
     public Receipt getReceipt(UUID id) {
-        ReceiptCursorWrapper cursor = query(ReceiptTable.Cols.UUID + " = ?",
-                new String[]{id.toString()});
+        ReceiptCursorWrapper cursor = query(
+                ReceiptTable.Cols.UUID + " = ?",
+                new String[]{id.toString()}
+        );
 
         try {
-            if (cursor.getCount() != 0) {
-                cursor.moveToFirst();
-                return cursor.getReceipt();
+            if (cursor.getCount() == 0) {
+                return null;
             }
+
+            cursor.moveToFirst();
+            return cursor.getReceipt();
         } finally {
             cursor.close();
         }
-
-        return null;
     }
 
     /**
@@ -148,13 +161,11 @@ public class ReceiptsList {
      * @param receipt
      */
     public void updateReceipt(Receipt receipt) {
-        Log.i(TAG, "Updating database with " + receipt);
-        String uuidStr = receipt.getId().toString();
+        String uuidString = receipt.getId().toString();
         ContentValues values = getContentValues(receipt);
 
-//        mdb.update(ReceiptTable.NAME, values,
-//                ReceiptTable.Cols.UUID + " = ?",
-//                new String[]{uuidStr});
+        mdb.update(ReceiptTable.NAME, values,
+                ReceiptTable.Cols.UUID + " = ?", new String[]{uuidString});
     }
 
     /**

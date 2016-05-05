@@ -14,6 +14,7 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class ReceiptListFragment extends Fragment {
     List<ParentListItem> items;
     private Callbacks mCallbacks;
     private MyAdapter mAdapter;
+    private Menu mOptionsMenu;
 
     /**
      * Callbacks onAttach
@@ -75,6 +77,85 @@ public class ReceiptListFragment extends Fragment {
     }
 
     /**
+     * Options Menu, Has create new crime and view details about group
+     *
+     * @param menu
+     * @param inflater
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        mOptionsMenu = menu;
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_receipt_list, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        mOptionsMenu = menu;
+
+        super.onPrepareOptionsMenu(menu);
+
+        if (getActivity().findViewById(R.id.twopane_layout) == null) {
+            mOptionsMenu.findItem(R.id.menu_item_delete_crime).setVisible(false);
+        } else {
+            mOptionsMenu.findItem(R.id.menu_item_delete_crime).setVisible(true);
+        }
+    }
+
+    /**
+     * Selection of an item from the menu in CrimeList
+     * @param item
+     * @return boolean
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_new_crime:
+                addReceiptToReceiptList();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Adds a receipt to the list.
+     * Callback
+     */
+    public void addReceiptToReceiptList() {
+        Receipt receipt = new Receipt();
+
+        // TODO: add the receipt to the list<Receipt> of the parent layout.
+        ReceiptsList.get(getActivity()).addReceipt(receipt);
+
+        /*
+        List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
+
+        // For Alpha Release Demonstration Purposes Only
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        List<Receipt> receipts1 = Arrays.asList(new Receipt("Receipt C"), new Receipt("Receipt D"));
+        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(0));
+        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(1));
+        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(0));
+        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(1));
+        ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0, receipts0.get(0).getDate());
+        ReceiptParentListItem item1 = new ReceiptParentListItem(receipts1, receipts1.get(0).getDate());
+
+        items = new ArrayList<ParentListItem>();
+        items.add(item0);
+        items.add(item1);
+        */
+
+        updateUI();
+        mCallbacks.onReceiptSelected(receipt);
+    }
+
+    /**
      * View created for current fragment
      *
      * @param inflater
@@ -89,8 +170,10 @@ public class ReceiptListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_receipt_list, container, false);
         ButterKnife.bind(this, view);
 
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.receipt_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        /*
         // Make some fake data.
         ReceiptsList rl = new ReceiptsList(getActivity());
 
@@ -107,28 +190,17 @@ public class ReceiptListFragment extends Fragment {
                 new Receipt("Receipt D"));
 
         for (Receipt receipt : receipts) {
-            rl.addReceipt(receipt);
+//            rl.addReceipt(receipt);
         }
 
-        rl.addReceipt(receipts.get(0));
-        rl.removeReceipt(receipts.get(0));
+//        rl.addReceipt(receipts.get(0));
+//        rl.removeReceipt(receipts.get(0));
 
         // </ fake data >
+        */
 
         updateUI();
         return view;
-    }
-
-    /**
-     * Options Menu, Has create new crime and view details about group
-     *
-     * @param menu
-     * @param inflater
-     */
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        // TODO: update menu options
     }
 
     @Override
@@ -144,6 +216,7 @@ public class ReceiptListFragment extends Fragment {
     }
 
     public void prepareExampleReceipts() {
+        Log.d(TAG, "prepareExampleReceipts: SHIT SHIT SHIT");
         List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
 
         // For Alpha Release Demonstration Purposes Only
@@ -171,6 +244,7 @@ public class ReceiptListFragment extends Fragment {
             mAdapter = new MyAdapter(getActivity().getApplicationContext(), items);
             mRecyclerView.setAdapter(mAdapter);
         } else {
+
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -200,6 +274,10 @@ public class ReceiptListFragment extends Fragment {
 
         public String getDate() {
             return mDate;
+        }
+
+        public void setRecipts(List<Receipt> recipts) {
+            mReceipts = recipts;
         }
     }
 
