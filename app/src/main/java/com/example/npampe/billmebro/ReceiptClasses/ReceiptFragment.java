@@ -89,12 +89,13 @@ public class ReceiptFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    mReceipt.setTitle(s.toString());
-                    updateReceipt();
+
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    mReceipt.setTitle(s.toString());
+                    updateReceipt();
                 }
             });
         }
@@ -155,7 +156,8 @@ public class ReceiptFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.d("DBG", "Price is: " + unit_euro.getValue() + "." + cent.getValue());
-                                mReceipt.setTotal(unit_euro.getValue() + (cent.getValue() / 100));
+//                                Log.d(TAG, "onClick: " + Double.toString(cent.getValue() * 5));
+                                mReceipt.setTotal(unit_euro.getValue() + (cent.getValue() * 5 / 100.0));
                                 mReceiptTotalTextView.setText(Double.toString(mReceipt.getTotal()));
                             }
                         }).setNegativeButton(R.string.reject_price_change, new DialogInterface.OnClickListener() {
