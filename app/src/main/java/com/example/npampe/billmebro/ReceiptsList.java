@@ -76,6 +76,7 @@ public class ReceiptsList {
      * @param receipt
      */
     public void addReceipt(Receipt receipt) {
+        Log.d(TAG, "addReceipt: Adding receipt in ReceiptsList");
         ContentValues values = getContentValues(receipt);
         mdb.insert(ReceiptTable.NAME, null, values);
     }

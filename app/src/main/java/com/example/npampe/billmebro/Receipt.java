@@ -13,6 +13,7 @@ public class Receipt
     private String mTitle;
     private double mTotal;
     private Date mDate;
+    private Calendar mCalendar;
     private String mPlace;
     private String mSummary;
     private String mNotes;
@@ -28,6 +29,7 @@ public class Receipt
         mTitle = title;
 
         Calendar calendar = Calendar.getInstance();
+        mCalendar = calendar;
         mDate = calendar.getTime();
     }
 
@@ -35,6 +37,7 @@ public class Receipt
     public Receipt(UUID uuid) {
         mId = uuid;
         mDate = new Date();
+        mCalendar = Calendar.getInstance();
     }
 
     public String toString() {
@@ -63,6 +66,7 @@ public class Receipt
 
     public void setDate(Date date) {
         mDate = date;
+        mCalendar.setTime(date);
     }
 
     public String getPlace() {
@@ -95,5 +99,13 @@ public class Receipt
 
     public String getPhotoFilename() {
         return "IMG_" + getId().toString() + ".jpg";
+    }
+
+    public Calendar getCalendar() {
+        return mCalendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        mCalendar = calendar;
     }
 }

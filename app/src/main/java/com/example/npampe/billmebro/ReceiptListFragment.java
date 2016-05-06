@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,8 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
@@ -30,6 +29,7 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class ReceiptListFragment extends Fragment {
     RecyclerView mRecyclerView;
     // For purposes of storing example receipts
     // TODO: Remove after further implementation
-    List<ParentListItem> items;
+    List<ReceiptParentListItem> mItems;
     private Callbacks mCallbacks;
     private MyAdapter mAdapter;
     private Menu mOptionsMenu;
@@ -128,6 +128,11 @@ public class ReceiptListFragment extends Fragment {
         // TODO: add the receipt to the list<Receipt> of the parent layout.
         ReceiptsList.get(getActivity()).addReceipt(receipt);
 
+        List<Receipt> receipts = new ArrayList<>();
+        receipts.add(receipt);
+
+        ReceiptParentListItem parentListItem = new ReceiptParentListItem(receipts, receipt.getDate());
+//        mItems.add(parentListItem);
         /*
         List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
 
@@ -146,9 +151,9 @@ public class ReceiptListFragment extends Fragment {
         ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0, receipts0.get(0).getDate());
         ReceiptParentListItem item1 = new ReceiptParentListItem(receipts1, receipts1.get(0).getDate());
 
-        items = new ArrayList<ParentListItem>();
-        items.add(item0);
-        items.add(item1);
+        mItems = new ArrayList<ParentListItem>();
+        mItems.add(item0);
+        mItems.add(item1);
         */
 
         updateUI();
@@ -234,18 +239,45 @@ public class ReceiptListFragment extends Fragment {
         ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0, receipts0.get(0).getDate());
         ReceiptParentListItem item1 = new ReceiptParentListItem(receipts1, receipts1.get(0).getDate());
 
-        items = new ArrayList<ParentListItem>();
-        items.add(item0);
-        items.add(item1);
+//        mItems = new ArrayList<ParentListItem>();
+//        mItems.add(item0);
+//        mItems.add(item1);
     }
 
     public void updateUI() {
+        ReceiptsList receiptsList = ReceiptsList.get(getActivity());
+        List<Receipt> receipts = receiptsList.getReceipts();
+        updateParentListItem(receipts);
+
         if (mAdapter == null) {
-            mAdapter = new MyAdapter(getActivity().getApplicationContext(), items);
+            mAdapter = new MyAdapter(getActivity().getApplicationContext(), mItems);
             mRecyclerView.setAdapter(mAdapter);
         } else {
-
+            mAdapter.setReceipts(receipts);
             mAdapter.notifyDataSetChanged();
+        }
+        Log.d(TAG, "updateUI: Finished the updateUI");
+    }
+
+    public void updateParentListItem(List<Receipt> receipts) {
+        List<ReceiptParentListItem> receiptParentListItems = new ArrayList<>();
+        if (mItems ==  null) {
+            mItems = new ArrayList<ReceiptParentListItem>();
+        }
+
+        for (Receipt receipt : receipts) {
+            for (ReceiptParentListItem rcpParentListItem : mItems) {
+                if (rcpParentListItem.getCalendar().DAY_OF_YEAR == receipt.getCalendar().DAY_OF_YEAR) {
+                    rcpParentListItem.add(receipt);
+                } else {
+                    ReceiptParentListItem newItem = new ReceiptParentListItem(receipt, receipt.getDate());
+                    receiptParentListItems.add(newItem);
+                }
+            }
+        }
+
+        for (ReceiptParentListItem rcpParItem : receiptParentListItems) {
+            mItems.add(rcpParItem);
         }
     }
 
@@ -255,11 +287,18 @@ public class ReceiptListFragment extends Fragment {
 
     public class ReceiptParentListItem implements ParentListItem {
         private List mReceipts;
-        private String mDate;
+        private Date mDate;
+        private Calendar mCalendar;
 
         public ReceiptParentListItem(List receipts, Date date) {
             mReceipts = receipts;
-            mDate = date.toString();
+            mDate = date;
+        }
+
+        public  ReceiptParentListItem(Receipt receipt, Date date) {
+            mReceipts = new ArrayList<>();
+            mReceipts.add(receipt);
+            mDate = date;
         }
 
         @Override
@@ -272,12 +311,30 @@ public class ReceiptListFragment extends Fragment {
             return false;
         }
 
-        public String getDate() {
+        public Date getDate() {
             return mDate;
         }
 
         public void setRecipts(List<Receipt> recipts) {
             mReceipts = recipts;
+        }
+
+        public void add(List<Receipt> receipts) {
+            for (Receipt recpt: receipts) {
+                mReceipts.add(recpt);
+            }
+        }
+
+        public void add(Receipt receipt) {
+            mReceipts.add(receipt);
+        }
+
+        public Calendar getCalendar() {
+            return mCalendar;
+        }
+
+        public void setCalendar(Calendar calendar) {
+            mCalendar = calendar;
         }
     }
 
@@ -312,7 +369,7 @@ public class ReceiptListFragment extends Fragment {
         }
 
         public void bind(ReceiptParentListItem parentItem) {
-            mRecipeTextView.setText(parentItem.getDate());
+            mRecipeTextView.setText(parentItem.getDate().toString());
         }
     }
 
@@ -420,7 +477,7 @@ public class ReceiptListFragment extends Fragment {
     public class MyAdapter extends ExpandableRecyclerAdapter<ReceiptParentViewHolder, ReceiptChildViewHolder> {
         private LayoutInflater mInflator;
 
-        public MyAdapter(Context context, List<ParentListItem> parentItemList) {
+        public MyAdapter(Context context, List<ReceiptParentListItem> parentItemList) {
             super(parentItemList);
             mInflator = LayoutInflater.from(context);
         }
@@ -449,6 +506,21 @@ public class ReceiptListFragment extends Fragment {
         public void onBindChildViewHolder(ReceiptChildViewHolder receiptChildViewHolder, int position, Object childListItem) {
             Receipt receiptChild = (Receipt) childListItem;
             receiptChildViewHolder.bind(receiptChild);
+        }
+
+        /**
+         * Compares the ParentListItem to ReceiptParentListItem
+         * sets the Receipts
+         * @param receipts
+         */
+        public void setReceipts(List<Receipt> receipts) {
+            updateParentListItem(receipts);
+//
+//            for (ReceiptParentListItem rcpParentListItem : mItems) {
+//                if (rcpParentListItem.equals(targetParentItem)) {
+//                    targetParentItem.add(receipts);
+//                }
+//            }
         }
     }
 }
