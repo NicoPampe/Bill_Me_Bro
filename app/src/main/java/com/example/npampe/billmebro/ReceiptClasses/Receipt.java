@@ -3,8 +3,11 @@ package com.example.npampe.billmebro.ReceiptClasses;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.UUID;
 
 public class Receipt
@@ -21,6 +24,7 @@ public class Receipt
     private String mSummary;
     private String mNotes;
 
+
     // TODO: Initialize list of users
     // TODO: Initialize list of conflicts
 
@@ -30,6 +34,7 @@ public class Receipt
 
     public Receipt(String title) {
         mTitle = title;
+
 
         Calendar calendar = Calendar.getInstance();
         mCalendar = calendar;
@@ -67,6 +72,7 @@ public class Receipt
     public Date getDate() {
         return mDate;
     }
+
 
     public void setDate(Date date) {
         mDate = date;
