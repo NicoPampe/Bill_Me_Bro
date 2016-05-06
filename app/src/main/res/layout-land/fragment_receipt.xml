@@ -48,6 +48,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:padding="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text= "Total: "
+                />
+            <TextView
+                android:id="@+id/receipt_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OPEN TOTALPICKER"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:padding="10dp">
 
             <TextView

@@ -35,6 +35,7 @@ public class Receipt
     public Receipt(String title) {
         mTitle = title;
 
+        mTotal = 0;
 
         Calendar calendar = Calendar.getInstance();
         mCalendar = calendar;
@@ -44,6 +45,7 @@ public class Receipt
 
     public Receipt(UUID uuid) {
         mId = uuid;
+        mTotal = 0;
         mDate = new Date();
         mCalendar = Calendar.getInstance();
         mDayOfYear = mCalendar.get(Calendar.DAY_OF_YEAR);

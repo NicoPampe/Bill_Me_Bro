@@ -17,4 +17,9 @@
     <string name="new_receipt">New Receipt</string>
     <string name="delete_crime">Delete Crime</string>
     <string name="delete_all_receipts">Remove All Receipts</string>
+    <string name="point_symbol">.</string>
+    <string name="money_symbol">$</string>
+    <string name="bar_change_price">Set the price of the receipt</string>
+    <string name="accept_price_change">Accept</string>
+    <string name="reject_price_change">Reject</string>
 </resources>
