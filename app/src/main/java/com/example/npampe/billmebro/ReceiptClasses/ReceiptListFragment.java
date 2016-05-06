@@ -1,7 +1,7 @@
 package com.example.npampe.billmebro.ReceiptClasses;
 
 
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -197,6 +197,14 @@ public class ReceiptListFragment extends Fragment {
             mAdapter.setReceipts(receipts);
             mAdapter.notifyDataSetChanged();
             Log.d(TAG, "updateUI: mAdapter is NOT null");
+
+//            getActivity().getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.receipt_recycler_view, this).commit();
+//            getActivity().getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .detach(this)
+//                    .attach(this)
+//                    .commit();
         }
         Log.d(TAG, "updateUI: Finished the updateUI");
     }

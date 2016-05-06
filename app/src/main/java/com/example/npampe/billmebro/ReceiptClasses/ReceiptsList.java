@@ -67,7 +67,8 @@ public class ReceiptsList {
 
     public void clearDatabase() {
         Log.i(TAG, "Nuking database!");
-        mContext.deleteDatabase(ReceiptBaseHelper.DATABASE_NAME);
+        mdb.delete(ReceiptTable.NAME, null, null);
+        mReceipts.clear();
     }
 
     /**
