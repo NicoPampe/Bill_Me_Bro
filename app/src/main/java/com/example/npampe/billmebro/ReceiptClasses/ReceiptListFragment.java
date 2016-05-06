@@ -28,12 +28,14 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.example.npampe.billmebro.R;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -250,6 +252,7 @@ public class ReceiptListFragment extends Fragment {
         private Date mDate;
         private Calendar mCalendar = new GregorianCalendar();
         private int mDayOfYear;
+        private ArrayList<DateFormat> mDateFormats;
 
         public ReceiptParentListItem(List<Receipt> receipts, Date date, int dayOfYear) {
             mReceipts = receipts;
@@ -258,6 +261,10 @@ public class ReceiptListFragment extends Fragment {
                 mCalendar.setTime(date);
                 mDayOfYear = dayOfYear;
             }
+
+            mDateFormats = new ArrayList<DateFormat>();
+            mDateFormats.add(DateFormat.getDateInstance(DateFormat.FULL));
+            mDateFormats.get(0).setTimeZone(TimeZone.getTimeZone("UTC"));
         }
 
         public ReceiptParentListItem(Receipt receipt, Date date, int dayOfYear) {
@@ -266,6 +273,10 @@ public class ReceiptListFragment extends Fragment {
             mDate = date;
             mCalendar.setTime(date);
             mDayOfYear = dayOfYear;
+
+            mDateFormats = new ArrayList<DateFormat>();
+            mDateFormats.add(DateFormat.getDateInstance(DateFormat.FULL));
+            mDateFormats.get(0).setTimeZone(TimeZone.getTimeZone("UTC"));
         }
 
         @Override
@@ -280,6 +291,10 @@ public class ReceiptListFragment extends Fragment {
 
         public Date getDate() {
             return mDate;
+        }
+
+        public String getDateFormatted() {
+            return mDateFormats.get(0).format(mDate);
         }
 
         public void setRecipts(List<Receipt> recipts) {
@@ -346,7 +361,7 @@ public class ReceiptListFragment extends Fragment {
         }
 
         public void bind(ReceiptParentListItem parentItem) {
-            mRecipeTextView.setText(parentItem.getDate().toString());
+            mRecipeTextView.setText(parentItem.getDateFormatted());
         }
     }
 
