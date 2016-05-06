@@ -1,5 +1,7 @@
 package com.example.npampe.billmebro;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +16,7 @@ public class Receipt
     private double mTotal;
     private Date mDate;
     private Calendar mCalendar;
+    private int mDayOfYear;
     private String mPlace;
     private String mSummary;
     private String mNotes;
@@ -31,13 +34,14 @@ public class Receipt
         Calendar calendar = Calendar.getInstance();
         mCalendar = calendar;
         mDate = calendar.getTime();
+        mDayOfYear = mCalendar.get(Calendar.DAY_OF_YEAR);
     }
-
 
     public Receipt(UUID uuid) {
         mId = uuid;
         mDate = new Date();
         mCalendar = Calendar.getInstance();
+        mDayOfYear = mCalendar.get(Calendar.DAY_OF_YEAR);
     }
 
     public String toString() {
@@ -67,6 +71,7 @@ public class Receipt
     public void setDate(Date date) {
         mDate = date;
         mCalendar.setTime(date);
+        mDayOfYear = mCalendar.get(Calendar.DAY_OF_YEAR);
     }
 
     public String getPlace() {
@@ -107,5 +112,13 @@ public class Receipt
 
     public void setCalendar(Calendar calendar) {
         mCalendar = calendar;
+    }
+
+    public int getDayOfYear() {
+        return mDayOfYear;
+    }
+
+    public void setDayOfYear(int dayOfYear) {
+        mDayOfYear = dayOfYear;
     }
 }

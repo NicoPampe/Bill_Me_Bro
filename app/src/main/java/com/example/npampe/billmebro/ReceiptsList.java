@@ -182,6 +182,7 @@ public class ReceiptsList {
         values.put(ReceiptTable.Cols.TITLE, receipt.getTitle());
         values.put(ReceiptTable.Cols.DATE, receipt.getDate().getTime());
         values.put(ReceiptTable.Cols.TOTAL, receipt.getTotal());
+        values.put(ReceiptTable.Cols.DAY_OF_YEAR, receipt.getDayOfYear());
 
         return values;
     }
