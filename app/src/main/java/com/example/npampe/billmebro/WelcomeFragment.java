@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.npampe.billmebro.GroupClasses.GroupManagerActivity;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

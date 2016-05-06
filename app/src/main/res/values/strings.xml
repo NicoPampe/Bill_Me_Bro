@@ -16,4 +16,5 @@
     <string name="group_created_on_text_view">Group created on:</string>
     <string name="new_receipt">New Receipt</string>
     <string name="delete_crime">Delete Crime</string>
+    <string name="delete_all_receipts">Remove All Receipts</string>
 </resources>

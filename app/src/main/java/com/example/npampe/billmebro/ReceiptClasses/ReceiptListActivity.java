@@ -1,13 +1,11 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.ReceiptClasses;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import java.util.UUID;
+import com.example.npampe.billmebro.R;
+import com.example.npampe.billmebro.SingleFragmentActivity;
 
 public class ReceiptListActivity extends SingleFragmentActivity
         implements ReceiptFragment.Callbacks, ReceiptListFragment.Callbacks {

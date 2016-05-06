@@ -1,4 +1,4 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.GroupClasses;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,8 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.example.npampe.billmebro.R;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.UUID;
 
 public class GroupFragment extends Fragment {

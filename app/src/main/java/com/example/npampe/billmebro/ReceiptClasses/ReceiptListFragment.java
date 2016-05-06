@@ -1,6 +1,7 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.ReceiptClasses;
 
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -19,13 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
+import com.example.npampe.billmebro.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,8 +111,13 @@ public class ReceiptListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_item_new_crime:
+            case R.id.menu_item_new_receipt:
                 addReceiptToReceiptList();
+                return true;
+            case R.id.menu_item_delete_all_receipts:
+                ReceiptsList.get(getActivity()).clearDatabase();
+                mItems.clear();
+                updateUI();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -125,36 +131,10 @@ public class ReceiptListFragment extends Fragment {
     public void addReceiptToReceiptList() {
         Receipt receipt = new Receipt();
 
-        // TODO: add the receipt to the list<Receipt> of the parent layout.
         ReceiptsList.get(getActivity()).addReceipt(receipt);
 
         List<Receipt> receipts = new ArrayList<>();
         receipts.add(receipt);
-
-        ReceiptParentListItem parentListItem = new ReceiptParentListItem(receipts, receipt.getDate());
-//        mItems.add(parentListItem);
-        /*
-        List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
-
-        // For Alpha Release Demonstration Purposes Only
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        List<Receipt> receipts1 = Arrays.asList(new Receipt("Receipt C"), new Receipt("Receipt D"));
-        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(0));
-        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(1));
-        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(0));
-        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(1));
-        ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0, receipts0.get(0).getDate());
-        ReceiptParentListItem item1 = new ReceiptParentListItem(receipts1, receipts1.get(0).getDate());
-
-        mItems = new ArrayList<ParentListItem>();
-        mItems.add(item0);
-        mItems.add(item1);
-        */
 
         updateUI();
         mCallbacks.onReceiptSelected(receipt);
@@ -178,32 +158,6 @@ public class ReceiptListFragment extends Fragment {
         mRecyclerView = (RecyclerView)view.findViewById(R.id.receipt_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        /*
-        // Make some fake data.
-        ReceiptsList rl = new ReceiptsList(getActivity());
-
-        // Our db should stay small.
-        if (!rl.getReceipts().isEmpty()) {
-            Log.i(TAG, "database is not empty! Nuking it.");
-            rl.nukeIt();
-        }
-
-        // Now add in our fake data.
-        List<Receipt> receipts = Arrays.asList(new Receipt("Receipt A"),
-                new Receipt("Receipt B"),
-                new Receipt("Receipt C"),
-                new Receipt("Receipt D"));
-
-        for (Receipt receipt : receipts) {
-//            rl.addReceipt(receipt);
-        }
-
-//        rl.addReceipt(receipts.get(0));
-//        rl.removeReceipt(receipts.get(0));
-
-        // </ fake data >
-        */
-
         updateUI();
         return view;
     }
@@ -217,31 +171,27 @@ public class ReceiptListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResmume: SHIT SHIT SHIT");
         updateUI();
     }
 
     public void prepareExampleReceipts() {
-        Log.d(TAG, "prepareExampleReceipts: SHIT SHIT SHIT");
-        List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
+            List<Receipt> receipts0 = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
 
-        // For Alpha Release Demonstration Purposes Only
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            // For Alpha Release Demonstration Purposes Only
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            ReceiptsList.get(getActivity()).addReceipt(receipts0.get(1));
+            List<Receipt> receipts1 = Arrays.asList(new Receipt("Receipt C"), new Receipt("Receipt D"));
+            ReceiptsList.get(getActivity()).addReceipt(receipts0.get(0));
+            ReceiptsList.get(getActivity()).addReceipt(receipts1.get(0));
+            ReceiptsList.get(getActivity()).addReceipt(receipts1.get(1));
+        if (ReceiptsList.get(getActivity()).getDataBase() == null) {
         }
-
-        List<Receipt> receipts1 = Arrays.asList(new Receipt("Receipt C"), new Receipt("Receipt D"));
-        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(0));
-        ReceiptsList.get(getActivity()).addReceipt(receipts0.get(1));
-        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(0));
-        ReceiptsList.get(getActivity()).addReceipt(receipts1.get(1));
-        ReceiptParentListItem item0 = new ReceiptParentListItem(receipts0, receipts0.get(0).getDate());
-        ReceiptParentListItem item1 = new ReceiptParentListItem(receipts1, receipts1.get(0).getDate());
-
-//        mItems = new ArrayList<ParentListItem>();
-//        mItems.add(item0);
-//        mItems.add(item1);
     }
 
     public void updateUI() {
@@ -253,9 +203,11 @@ public class ReceiptListFragment extends Fragment {
         if (mAdapter == null) {
             mAdapter = new MyAdapter(getActivity().getApplicationContext(), mItems);
             mRecyclerView.setAdapter(mAdapter);
+            Log.d(TAG, "updateUI: mAdapter is null");
         } else {
             mAdapter.setReceipts(receipts);
             mAdapter.notifyDataSetChanged();
+            Log.d(TAG, "updateUI: mAdapter is NOT null");
         }
         Log.d(TAG, "updateUI: Finished the updateUI");
     }
@@ -519,12 +471,6 @@ public class ReceiptListFragment extends Fragment {
          */
         public void setReceipts(List<Receipt> receipts) {
             updateParentListItem(receipts);
-//
-//            for (ReceiptParentListItem rcpParentListItem : mItems) {
-//                if (rcpParentListItem.equals(targetParentItem)) {
-//                    targetParentItem.add(receipts);
-//                }
-//            }
         }
     }
 }

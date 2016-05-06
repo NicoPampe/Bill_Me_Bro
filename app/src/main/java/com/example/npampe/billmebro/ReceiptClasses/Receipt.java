@@ -1,4 +1,4 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.ReceiptClasses;
 
 import java.io.Serializable;
 import java.util.Calendar;

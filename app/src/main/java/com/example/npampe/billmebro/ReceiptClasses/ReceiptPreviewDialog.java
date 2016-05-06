@@ -1,4 +1,4 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.ReceiptClasses;
 
 
 import android.app.Dialog;
@@ -10,6 +10,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.npampe.billmebro.R;
 
 public class ReceiptPreviewDialog extends DialogFragment {
     @Override

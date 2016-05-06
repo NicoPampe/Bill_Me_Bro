@@ -27,18 +27,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ReceiptPagerActivity"
+        <activity android:name=".ReceiptClasses.ReceiptPagerActivity"
                   android:label="Receipt Pager Activity"
-                  android:parentActivityName=".ReceiptListActivity"/>
-        <activity android:name=".GroupManagerActivity"
+                  android:parentActivityName=".ReceiptClasses.ReceiptListActivity"/>
+        <activity android:name=".GroupClasses.GroupManagerActivity"
                   android:label="Group List Activity"
                   android:parentActivityName=".WelcomeActivity"/>
-        <activity android:name=".GroupPagerActivity"
+        <activity android:name=".GroupClasses.GroupPagerActivity"
                   android:label="Group Pager Activity"
-                  android:parentActivityName=".GroupManagerActivity"/>
-        <activity android:name=".ReceiptListActivity"
+                  android:parentActivityName=".GroupClasses.GroupManagerActivity"/>
+        <activity android:name=".ReceiptClasses.ReceiptListActivity"
                   android:label="@string/app_name"
-                  android:parentActivityName=".GroupManagerActivity" />
+                  android:parentActivityName=".GroupClasses.GroupManagerActivity" />
 
     </application>
 

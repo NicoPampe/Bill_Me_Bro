@@ -1,9 +1,10 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.GroupClasses;
+
+import com.example.npampe.billmebro.ReceiptClasses.Receipt;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
 

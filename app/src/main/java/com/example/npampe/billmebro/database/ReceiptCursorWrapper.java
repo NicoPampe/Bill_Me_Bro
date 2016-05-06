@@ -3,7 +3,7 @@ package com.example.npampe.billmebro.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.example.npampe.billmebro.Receipt;
+import com.example.npampe.billmebro.ReceiptClasses.Receipt;
 import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
 
 import java.util.Date;

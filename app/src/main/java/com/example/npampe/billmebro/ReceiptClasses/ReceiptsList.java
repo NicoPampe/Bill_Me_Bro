@@ -1,4 +1,4 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.ReceiptClasses;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -65,7 +65,7 @@ public class ReceiptsList {
         return sReceiptsList;
     }
 
-    public void nukeIt() {
+    public void clearDatabase() {
         Log.i(TAG, "Nuking database!");
         mContext.deleteDatabase(ReceiptBaseHelper.DATABASE_NAME);
     }
@@ -139,6 +139,13 @@ public class ReceiptsList {
         } finally {
             cursor.close();
         }
+    }
+
+    /**
+     * @return returns the database of the Receipt List
+     */
+    public SQLiteDatabase getDataBase() {
+        return mdb;
     }
 
     /**

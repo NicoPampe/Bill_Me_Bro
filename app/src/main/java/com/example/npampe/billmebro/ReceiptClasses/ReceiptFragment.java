@@ -1,14 +1,12 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.ReceiptClasses;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,9 +19,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.example.npampe.billmebro.DatePickerFragment;
+import com.example.npampe.billmebro.PictureDialogFragment;
+import com.example.npampe.billmebro.PictureUtils;
+import com.example.npampe.billmebro.R;
+
 import java.io.File;
-import java.net.URI;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 

@@ -1,9 +1,11 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.GroupClasses;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+
+import com.example.npampe.billmebro.R;
+import com.example.npampe.billmebro.SingleFragmentActivity;
 
 public class GroupManagerActivity extends SingleFragmentActivity
         implements GroupListFragment.Callbacks, GroupFragment.Callbacks {

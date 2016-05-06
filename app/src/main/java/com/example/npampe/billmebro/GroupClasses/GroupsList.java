@@ -1,4 +1,4 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.GroupClasses;
 
 import android.content.Context;
 

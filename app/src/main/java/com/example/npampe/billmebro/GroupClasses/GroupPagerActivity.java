@@ -1,4 +1,4 @@
-package com.example.npampe.billmebro;
+package com.example.npampe.billmebro.GroupClasses;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.example.npampe.billmebro.R;
 
 import java.util.List;
 import java.util.UUID;
