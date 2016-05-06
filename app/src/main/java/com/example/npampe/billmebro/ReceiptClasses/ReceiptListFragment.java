@@ -387,7 +387,7 @@ public class ReceiptListFragment extends Fragment {
                     mCallbacks.onReceiptSelected(mReceipt);
                 } else {
                     FragmentManager fm = getFragmentManager();
-                    ReceiptPreviewDialog dialog = new ReceiptPreviewDialog();
+                    ReceiptPreviewDialog dialog = new ReceiptPreviewDialog(mReceipt);
                     dialog.show(fm, DIALOG_PREVIEW);
                 }
                 return false;
