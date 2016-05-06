@@ -2,6 +2,7 @@ package com.example.npampe.billmebro.ReceiptClasses;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.example.npampe.billmebro.R;
@@ -12,6 +13,7 @@ public class ReceiptListActivity extends SingleFragmentActivity
 
     private static final String TAG = "Receipt_List_Activity";
     private static final String ARG_GROUP_ID = "group_id";
+    private static final String FRAGMENT_TAG = "Receipt_List_Fragment";
 
     @Override
     protected Fragment createFragment() {
@@ -26,15 +28,17 @@ public class ReceiptListActivity extends SingleFragmentActivity
             startActivity(intent);
         } else {
             Log.d(TAG, "onReceiptSelected: Updated the edit receipt frag");
-            Fragment newRecetiptDetails = ReceiptFragment.newInstance(receipt.getId());
-            getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, newRecetiptDetails).commit();
+            Fragment newReceiptDetails = ReceiptFragment.newInstance(receipt.getId());
+            getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, newReceiptDetails).commit();
         }
     }
 
     @Override
     public void onReceiptUpdated(Receipt receipt) {
+        Log.d(TAG, "onReceiptUpdated: ");
         ReceiptListFragment listFragment = (ReceiptListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         listFragment.updateUI();
+        getSupportFragmentManager().beginTransaction().remove(listFragment).add(R.id.fragment_container, createFragment()).commit();
     }
 
     @Override

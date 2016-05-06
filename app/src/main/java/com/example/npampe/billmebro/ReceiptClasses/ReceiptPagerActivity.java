@@ -69,5 +69,6 @@ public class ReceiptPagerActivity extends AppCompatActivity implements ReceiptFr
 
     @Override
     public void onReceiptUpdated(Receipt receipt) {
+        Log.d(TAG, "onReceiptUpdated: ");
     }
 }

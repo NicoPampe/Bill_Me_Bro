@@ -46,8 +46,7 @@ public class ReceiptListFragment extends Fragment {
 
     @Bind(R.id.receipt_recycler_view)
     RecyclerView mRecyclerView;
-    // For purposes of storing example receipts
-    // TODO: Remove after further implementation
+
     List<ReceiptParentListItem> mItems;
     private Callbacks mCallbacks;
     private MyAdapter mAdapter;
@@ -156,6 +155,7 @@ public class ReceiptListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        Log.d(TAG, "onCreateView: ");
 
         View view = inflater.inflate(R.layout.fragment_receipt_list, container, false);
         ButterKnife.bind(this, view);
@@ -175,14 +175,16 @@ public class ReceiptListFragment extends Fragment {
 
     public void prepareExampleReceipts() {
         Log.d(TAG, "prepareExampleReceipts: SHIT SHIT SHIT");
-        List<Receipt> receipts = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
+        List<Receipt> receipts = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"), new Receipt("Receipt C"));
 
         if (ReceiptsList.get(getActivity()).getReceipts().isEmpty()) {
             receipts.get(0).setDayOfYear(receipts.get(0).getDayOfYear() - 2);
             receipts.get(1).setDayOfYear(receipts.get(1).getDayOfYear() - 2);
+            receipts.get(2).setDayOfYear(receipts.get(2).getDayOfYear() - 1);
 
-            ReceiptsList.get(getActivity()).addReceipt(receipts.get(0));
-            ReceiptsList.get(getActivity()).addReceipt(receipts.get(1));
+            for (Receipt r : receipts) {
+                ReceiptsList.get(getActivity()).addReceipt(r);
+            }
         }
     }
 
@@ -214,6 +216,7 @@ public class ReceiptListFragment extends Fragment {
 
     public void updateParentListItem(List<Receipt> receipts) {
         ArrayList<ReceiptParentListItem> newParents = new ArrayList<>();
+        Boolean parentHasBeenFound = false;
 
         for (Receipt receipt : receipts) {
             if (mItems == null) {
@@ -221,17 +224,21 @@ public class ReceiptListFragment extends Fragment {
                 ReceiptParentListItem init = new ReceiptParentListItem(receipt, receipt.getDate(), receipt.getDayOfYear());
                 mItems.add(init);
             } else {
+                parentHasBeenFound = false;
+
                 for (int i = 0; i < mItems.size(); i++) {
-                    if (mItems.get(i).getDayOfYear() != receipt.getDayOfYear()) {
-                        ReceiptParentListItem newItem = new ReceiptParentListItem(receipt, receipt.getDate(), receipt.getDayOfYear());
-                        newParents.add(newItem);
+                    if (mItems.get(i).getDayOfYear() == receipt.getDayOfYear()) {
+                        parentHasBeenFound = true;
+                        break;
                     }
                 }
-            }
-        }
 
-        for (ReceiptParentListItem parent : newParents) {
-            mItems.add(parent);
+                if (!parentHasBeenFound) {
+                    Log.d(TAG, "updateParentListItem: ADD NEW PARENT => receipt = " + receipt.getTitle() + ", new_day_cat = " + receipt.getDayOfYear());
+                    ReceiptParentListItem newItem = new ReceiptParentListItem(receipt, receipt.getDate(), receipt.getDayOfYear());
+                    mItems.add(newItem);
+                }
+            }
         }
 
         for (Receipt receipt : receipts) {

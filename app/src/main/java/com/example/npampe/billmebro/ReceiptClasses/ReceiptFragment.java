@@ -38,7 +38,6 @@ public class ReceiptFragment extends Fragment {
     private File mPhotoFile;
     private Callbacks mCallbacks;
     private EditText mTitleField;
-
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
 
@@ -79,12 +78,13 @@ public class ReceiptFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    mReceipt.setTitle(s.toString());
-                    updateReceipt();
+
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    mReceipt.setTitle(s.toString());
+                    updateReceipt();
                 }
             });
         }
