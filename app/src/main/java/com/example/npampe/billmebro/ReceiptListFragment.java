@@ -247,6 +247,7 @@ public class ReceiptListFragment extends Fragment {
     public void updateUI() {
         ReceiptsList receiptsList = ReceiptsList.get(getActivity());
         List<Receipt> receipts = receiptsList.getReceipts();
+        Log.d(TAG, "updateUI: the receipt size " + receipts.size());
         updateParentListItem(receipts);
 
         if (mAdapter == null) {
@@ -261,17 +262,20 @@ public class ReceiptListFragment extends Fragment {
 
     public void updateParentListItem(List<Receipt> receipts) {
         List<ReceiptParentListItem> receiptParentListItems = new ArrayList<>();
-        if (mItems ==  null) {
-            mItems = new ArrayList<ReceiptParentListItem>();
-        }
 
         for (Receipt receipt : receipts) {
-            for (ReceiptParentListItem rcpParentListItem : mItems) {
-                if (rcpParentListItem.getCalendar().DAY_OF_YEAR == receipt.getCalendar().DAY_OF_YEAR) {
-                    rcpParentListItem.add(receipt);
-                } else {
-                    ReceiptParentListItem newItem = new ReceiptParentListItem(receipt, receipt.getDate());
-                    receiptParentListItems.add(newItem);
+            if (mItems ==  null) {
+                mItems = new ArrayList<ReceiptParentListItem>();
+                ReceiptParentListItem init = new ReceiptParentListItem(receipt, receipt.getDate());
+                mItems.add(init);
+            } else {
+                for (ReceiptParentListItem rcpParentListItem : mItems) {
+                    if (rcpParentListItem.getCalendar().DAY_OF_YEAR == receipt.getCalendar().DAY_OF_YEAR) {
+                        rcpParentListItem.add(receipt);
+                    } else {
+                        ReceiptParentListItem newItem = new ReceiptParentListItem(receipt, receipt.getDate());
+                        mItems.add(newItem);
+                    }
                 }
             }
         }
