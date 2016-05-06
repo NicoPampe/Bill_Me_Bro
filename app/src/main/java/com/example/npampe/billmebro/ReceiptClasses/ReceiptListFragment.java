@@ -176,10 +176,11 @@ public class ReceiptListFragment extends Fragment {
         List<Receipt> receipts = Arrays.asList(new Receipt("Receipt A"), new Receipt("Receipt B"));
 
         if (ReceiptsList.get(getActivity()).getReceipts().isEmpty()) {
+            receipts.get(0).setDayOfYear(receipts.get(0).getDayOfYear() - 2);
+            receipts.get(1).setDayOfYear(receipts.get(1).getDayOfYear() - 2);
+
             ReceiptsList.get(getActivity()).addReceipt(receipts.get(0));
             ReceiptsList.get(getActivity()).addReceipt(receipts.get(1));
-            ReceiptParentListItem item0 = new ReceiptParentListItem(receipts, receipts.get(0).getDate(), receipts.get(0).getDayOfYear());
-            ReceiptParentListItem item1 = new ReceiptParentListItem(receipts, receipts.get(0).getDate(), receipts.get(0).getDayOfYear());
         }
     }
 

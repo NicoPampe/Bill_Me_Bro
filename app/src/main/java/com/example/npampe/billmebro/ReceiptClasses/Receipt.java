@@ -120,5 +120,7 @@ public class Receipt
 
     public void setDayOfYear(int dayOfYear) {
         mDayOfYear = dayOfYear;
+        mCalendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+        mDate.setTime(mCalendar.getTimeInMillis());
     }
 }
