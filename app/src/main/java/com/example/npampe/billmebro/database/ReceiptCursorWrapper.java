@@ -20,11 +20,13 @@ public class ReceiptCursorWrapper extends CursorWrapper {
         String title = getString(getColumnIndex(ReceiptTable.Cols.TITLE));
         long date = getLong(getColumnIndex(ReceiptTable.Cols.DATE));
         double total = getDouble(getColumnIndex(ReceiptTable.Cols.TOTAL));
+        int dayOfYear = getInt(getColumnIndex(ReceiptTable.Cols.DAY_OF_YEAR));
 
         Receipt receipt = new Receipt(UUID.fromString(uuidStr));
         receipt.setTitle(title);
         receipt.setDate(new Date(date));
         receipt.setTotal(total);
+        receipt.setDayOfYear(dayOfYear);
         return receipt;
     }
 }

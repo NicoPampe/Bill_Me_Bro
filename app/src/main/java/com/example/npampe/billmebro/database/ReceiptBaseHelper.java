@@ -22,12 +22,13 @@ public class ReceiptBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.i(TAG, "Creating new receipt database");
         db.execSQL("create table " + ReceiptTable.NAME + "(" +
-                "_id integer primary key autoincrement, " +
-                ReceiptTable.Cols.UUID + ", " +
-                ReceiptTable.Cols.TITLE + ", " +
-                ReceiptTable.Cols.DATE + ", " +
-                ReceiptTable.Cols.TOTAL +
-                ")"
+                        "_id integer primary key autoincrement, " +
+                        ReceiptTable.Cols.UUID + ", " +
+                        ReceiptTable.Cols.TITLE + ", " +
+                        ReceiptTable.Cols.DATE + ", " +
+                        ReceiptTable.Cols.DAY_OF_YEAR + ", " +
+                        ReceiptTable.Cols.TOTAL +
+                        ")"
         );
     }
 
