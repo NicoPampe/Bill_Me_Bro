@@ -2,6 +2,7 @@ package com.example.npampe.billmebro.ReceiptClasses;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -59,7 +60,11 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
         mValues = calculateData(mValues);
         MyGraphview graphview = new MyGraphview(getContext(), mValues);
 
-        graphview.setRadiues(getActivity().getWindow().getDecorView().getWidth() * (float)0.55);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            graphview.setRadiues(getActivity().getWindow().getDecorView().getWidth() * (float)0.55);
+        } else {
+            graphview.setRadiues(getActivity().getWindow().getDecorView().getWidth() * (float)0.4);
+        }
         chartLinear.setLayoutParams(parmas);
         chartLinear.addView(graphview);
 
