@@ -105,7 +105,8 @@ public class ReceiptsList {
         List<Receipt> receipts = new ArrayList<>();
 
         String where = ReceiptsTable.Cols.GROUP_ID + " = ?";
-        ReceiptCursorWrapper cursor = queryReceipts(where, new String[]{mGroupId.toString()});
+        //ReceiptCursorWrapper cursor = queryReceipts(where, new String[]{mGroupId.toString()});
+        ReceiptCursorWrapper cursor = queryReceipts(null, null);
 
         try {
             cursor.moveToFirst();

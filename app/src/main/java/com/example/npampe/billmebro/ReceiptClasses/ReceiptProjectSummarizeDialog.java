@@ -64,7 +64,7 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
             NumberFormat formatter = NumberFormat.getCurrencyInstance();
             String result = formatter.format(receipt.getTotal());
             receiptTextView.setText(String.format("%s: %s", receipt.getTitle(), result));
-            receiptTextView.setTextColor(COLORS_BASE[mReceipts.indexOf(receipt)]);
+            receiptTextView.setTextColor(COLORS_BASE[mReceipts.indexOf(receipt) % COLORS_BASE.length]);
             mReceiptsLinearLayout.addView(receiptTextView);
         }
 
@@ -155,11 +155,11 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
 
             for (int i = 0; i < value_degree.length; i++) {//values2.length; i++) {
                 if (i == 0) {
-                    paint.setColor(COLORS[i]);
+                    paint.setColor(COLORS[i % COLORS.length]);
                     canvas.drawArc(rectf, 0, value_degree[i], true, paint);
                 } else {
                     temp += (int) value_degree[i - 1];
-                    paint.setColor(COLORS[i]);
+                    paint.setColor(COLORS[i % COLORS.length]);
                     canvas.drawArc(rectf, temp, value_degree[i], true, paint);
                 }
             }
