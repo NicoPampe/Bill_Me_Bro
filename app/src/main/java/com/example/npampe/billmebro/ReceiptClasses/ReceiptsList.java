@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
 
-import com.example.npampe.billmebro.database.ReceiptBaseHelper;
+import com.example.npampe.billmebro.database.DbHelper;
 import com.example.npampe.billmebro.database.ReceiptCursorWrapper;
-import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptTable;
+import com.example.npampe.billmebro.database.ReceiptDbSchema.ReceiptsTable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,9 +47,10 @@ public class ReceiptsList {
      * @param context The applicaton context.
      */
     public ReceiptsList(Context context) {
+        Log.i(TAG, "ReceiptsList()");
         mReceipts = new ArrayList<>();
         mContext = context.getApplicationContext();
-        mdb = new ReceiptBaseHelper(mContext).getWritableDatabase();
+        mdb = new DbHelper(mContext).getWritableDatabase();
     }
 
     /**
@@ -67,7 +68,7 @@ public class ReceiptsList {
 
     public void clearDatabase() {
         Log.i(TAG, "Nuking database!");
-        mdb.delete(ReceiptTable.NAME, null, null);
+        mdb.delete(ReceiptsTable.NAME, null, null);
         mReceipts.clear();
     }
 
@@ -79,7 +80,7 @@ public class ReceiptsList {
     public void addReceipt(Receipt receipt) {
         Log.d(TAG, "addReceipt: Adding receipt in ReceiptsList");
         ContentValues values = getContentValues(receipt);
-        mdb.insert(ReceiptTable.NAME, null, values);
+        mdb.insert(ReceiptsTable.NAME, null, values);
     }
 
     /**
@@ -88,7 +89,7 @@ public class ReceiptsList {
      * @param receipt
      */
     public void removeReceipt(Receipt receipt) {
-        mdb.delete(ReceiptTable.NAME, ReceiptTable.Cols.UUID + " = ?", new String[] {receipt.getId().toString()});
+        mdb.delete(ReceiptsTable.NAME, ReceiptsTable.Cols.RECEIPT_ID + " = ?", new String[] {receipt.getId().toString()});
     }
 
     /**
@@ -126,7 +127,7 @@ public class ReceiptsList {
      */
     public Receipt getReceipt(UUID id) {
         ReceiptCursorWrapper cursor = query(
-                ReceiptTable.Cols.UUID + " = ?",
+                ReceiptsTable.Cols.RECEIPT_ID + " = ?",
                 new String[]{id.toString()}
         );
 
@@ -173,8 +174,8 @@ public class ReceiptsList {
         String uuidString = receipt.getId().toString();
         ContentValues values = getContentValues(receipt);
 
-        mdb.update(ReceiptTable.NAME, values,
-                ReceiptTable.Cols.UUID + " = ?", new String[]{uuidString});
+        mdb.update(ReceiptsTable.NAME, values,
+                ReceiptsTable.Cols.RECEIPT_ID + " = ?", new String[]{uuidString});
     }
 
     /**
@@ -186,17 +187,17 @@ public class ReceiptsList {
     private ContentValues getContentValues(Receipt receipt) {
         ContentValues values = new ContentValues();
 
-        values.put(ReceiptTable.Cols.UUID, receipt.getId().toString());
-        values.put(ReceiptTable.Cols.TITLE, receipt.getTitle());
-        values.put(ReceiptTable.Cols.DATE, receipt.getDate().getTime());
-        values.put(ReceiptTable.Cols.TOTAL, receipt.getTotal());
-        values.put(ReceiptTable.Cols.DAY_OF_YEAR, receipt.getDayOfYear());
+        values.put(ReceiptsTable.Cols.RECEIPT_ID, receipt.getId().toString());
+        values.put(ReceiptsTable.Cols.TITLE, receipt.getTitle());
+        values.put(ReceiptsTable.Cols.DATE, receipt.getDate().getTime());
+        values.put(ReceiptsTable.Cols.TOTAL, receipt.getTotal());
+        values.put(ReceiptsTable.Cols.DAY_OF_YEAR, receipt.getDayOfYear());
 
         return values;
     }
 
     private ReceiptCursorWrapper query(String where, String[] args) {
-        Cursor cursor = mdb.query(ReceiptTable.NAME,
+        Cursor cursor = mdb.query(ReceiptsTable.NAME,
                 null, // Columns - null selects all of them
                 where,
                 args,

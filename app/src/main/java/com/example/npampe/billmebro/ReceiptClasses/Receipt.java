@@ -13,7 +13,7 @@ import java.util.UUID;
 public class Receipt
         implements Serializable {
     private static final String TAG = "Receipt";
-
+    private ArrayList<DateFormat> mDateFormats;
     private UUID mId = UUID.randomUUID();
     private String mTitle;
     private double mTotal;
@@ -30,11 +30,16 @@ public class Receipt
 
     public Receipt() {
         this(UUID.randomUUID());
+        mDateFormats = new ArrayList<DateFormat>();
+        mDateFormats.add(DateFormat.getDateInstance(DateFormat.FULL));
+        mDateFormats.get(0).setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     public Receipt(String title) {
         mTitle = title;
-
+        mDateFormats = new ArrayList<DateFormat>();
+        mDateFormats.add(DateFormat.getDateInstance(DateFormat.FULL));
+        mDateFormats.get(0).setTimeZone(TimeZone.getTimeZone("UTC"));
         mTotal = 0;
 
         Calendar calendar = Calendar.getInstance();
@@ -49,6 +54,9 @@ public class Receipt
         mDate = new Date();
         mCalendar = Calendar.getInstance();
         mDayOfYear = mCalendar.get(Calendar.DAY_OF_YEAR);
+        mDateFormats = new ArrayList<DateFormat>();
+        mDateFormats.add(DateFormat.getDateInstance(DateFormat.FULL));
+        mDateFormats.get(0).setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     public String toString() {
@@ -73,6 +81,10 @@ public class Receipt
 
     public Date getDate() {
         return mDate;
+    }
+
+    public String getFormattedDate() {
+        return mDateFormats.get(0).format(mDate);
     }
 
 
