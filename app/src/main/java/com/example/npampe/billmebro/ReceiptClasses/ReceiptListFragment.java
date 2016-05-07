@@ -92,6 +92,10 @@ public class ReceiptListFragment extends Fragment {
         inflater.inflate(R.menu.fragment_receipt_list, menu);
     }
 
+    /**
+     * Preparation of the menu.
+     * @param menu
+     */
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         mOptionsMenu = menu;
@@ -121,6 +125,13 @@ public class ReceiptListFragment extends Fragment {
                 ReceiptsList.get(getActivity()).clearDatabase();
                 mItems.clear();
                 updateUI();
+                return true;
+            case R.id.menu_item_summarized:
+                FragmentManager fm = getFragmentManager();
+                ReceiptsList receiptsList = ReceiptsList.get(getActivity());
+                List<Receipt> receipts = receiptsList.getReceipts();
+                ReceiptProjectSummarizeDialog dialog = new ReceiptProjectSummarizeDialog(receipts);
+                dialog.show(fm, DIALOG_PREVIEW);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -202,14 +213,6 @@ public class ReceiptListFragment extends Fragment {
             mAdapter.setReceipts(receipts);
             mAdapter.notifyDataSetChanged();
             Log.d(TAG, "updateUI: mAdapter is NOT null");
-
-//            getActivity().getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.receipt_recycler_view, this).commit();
-//            getActivity().getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .detach(this)
-//                    .attach(this)
-//                    .commit();
         }
         Log.d(TAG, "updateUI: Finished the updateUI");
     }

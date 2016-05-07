@@ -25,7 +25,6 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.example.npampe.billmebro.DatePickerFragment;
-import com.example.npampe.billmebro.MoneyDialog;
 import com.example.npampe.billmebro.PictureDialogFragment;
 import com.example.npampe.billmebro.PictureUtils;
 import com.example.npampe.billmebro.R;
@@ -137,6 +136,8 @@ public class ReceiptFragment extends Fragment {
 
         /**
          * Set money picker
+         * An extra action is set up for a responce from the listener.
+         * Calls an action dialog.
          */
         mReceiptTotalTextView = (TextView)v.findViewById(R.id.receipt_total_price);
         mReceiptTotalTextView.setOnClickListener(new View.OnClickListener() {

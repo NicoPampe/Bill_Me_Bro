@@ -3,6 +3,12 @@
       xmlns:app="http://schemas.android.com/tools"
     >
     <item
+        android:id="@+id/menu_item_summarized"
+        android:title="@string/menu_summarized_project"
+        app:showAsAction="ifRoom|withText"
+        />
+
+    <item
         android:id="@+id/menu_item_new_receipt"
         android:title="@string/new_receipt"
         app:showAsAction="ifRoom|withText"

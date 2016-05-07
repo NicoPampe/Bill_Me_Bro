@@ -22,4 +22,5 @@
     <string name="bar_change_price">Set the price of the receipt</string>
     <string name="accept_price_change">Accept</string>
     <string name="reject_price_change">Reject</string>
+    <string name="menu_summarized_project">Summarization</string>
 </resources>
