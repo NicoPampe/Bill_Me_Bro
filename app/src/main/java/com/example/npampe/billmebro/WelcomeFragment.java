@@ -1,6 +1,7 @@
 package com.example.npampe.billmebro;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,7 +37,9 @@ public class WelcomeFragment extends Fragment {
             public void onClick(View v) {
                 String username = mUsernameTextView.getText().toString();
                 if (username.equals("")) {
-                    Toast.makeText(getActivity(), "Please enter a username", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please enter a username.", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+                    startActivity(i);
                     return;
                 }
                 ReceiptsList receipts = ReceiptsList.get(getActivity());
