@@ -1,7 +1,5 @@
 package com.example.npampe.billmebro.ReceiptClasses;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -12,20 +10,27 @@ import java.util.UUID;
 
 public class Receipt
         implements Serializable {
+
     private static final String TAG = "Receipt";
+
     private ArrayList<DateFormat> mDateFormats;
+
     private UUID mId = UUID.randomUUID();
+
+    public UUID getGroupId() {
+        return mGroupId;
+    }
+
+    public void setGroupId(UUID groupId) {
+        mGroupId = groupId;
+    }
+
+    private UUID mGroupId;
     private String mTitle;
-    private double mTotal;
     private Date mDate;
-    private Calendar mCalendar;
     private int mDayOfYear;
-    private String mPlace;
-    private String mSummary;
-    private String mNotes;
+    private double mTotal;
 
-
-    // TODO: Initialize list of users
     // TODO: Initialize list of conflicts
 
     public Receipt() {
@@ -43,17 +48,16 @@ public class Receipt
         mTotal = 0;
 
         Calendar calendar = Calendar.getInstance();
-        mCalendar = calendar;
         mDate = calendar.getTime();
-        mDayOfYear = mCalendar.get(Calendar.DAY_OF_YEAR);
+        mDayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
     }
 
     public Receipt(UUID uuid) {
         mId = uuid;
         mTotal = 0;
         mDate = new Date();
-        mCalendar = Calendar.getInstance();
-        mDayOfYear = mCalendar.get(Calendar.DAY_OF_YEAR);
+        Calendar calendar = Calendar.getInstance();
+        mDayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
         mDateFormats = new ArrayList<DateFormat>();
         mDateFormats.add(DateFormat.getDateInstance(DateFormat.FULL));
         mDateFormats.get(0).setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -90,32 +94,9 @@ public class Receipt
 
     public void setDate(Date date) {
         mDate = date;
-        mCalendar.setTime(date);
-        mDayOfYear = mCalendar.get(Calendar.DAY_OF_YEAR);
-    }
-
-    public String getPlace() {
-        return mPlace;
-    }
-
-    public void setPlace(String place) {
-        mPlace = place;
-    }
-
-    public String getSummary() {
-        return mSummary;
-    }
-
-    public void setSummary(String summary) {
-        mSummary = summary;
-    }
-
-    public String getNotes() {
-        return mNotes;
-    }
-
-    public void setNotes(String notes) {
-        mNotes = notes;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        mDayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
     }
 
     public UUID getId() {
@@ -126,21 +107,14 @@ public class Receipt
         return "IMG_" + getId().toString() + ".jpg";
     }
 
-    public Calendar getCalendar() {
-        return mCalendar;
-    }
-
-    public void setCalendar(Calendar calendar) {
-        mCalendar = calendar;
-    }
-
     public int getDayOfYear() {
         return mDayOfYear;
     }
 
     public void setDayOfYear(int dayOfYear) {
         mDayOfYear = dayOfYear;
-        mCalendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
-        mDate.setTime(mCalendar.getTimeInMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+        mDate.setTime(calendar.getTimeInMillis());
     }
 }

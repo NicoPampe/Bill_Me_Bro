@@ -23,4 +23,6 @@
     <string name="accept_price_change">Accept</string>
     <string name="reject_price_change">Reject</string>
     <string name="menu_summarized_project">Summarization</string>
+    <string name="btn_login">Go</string>
+    <string name="text_username">Username</string>
 </resources>

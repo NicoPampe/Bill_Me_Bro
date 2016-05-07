@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.npampe.billmebro.GroupClasses.GroupManagerActivity;
+import com.example.npampe.billmebro.ReceiptClasses.ReceiptsList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,9 +20,6 @@ public class WelcomeFragment extends Fragment {
     private static final String TAG = "Welcome_Fragment";
     @Bind(R.id.user_name_text_view)
     TextView mUsernameTextView;
-
-    @Bind(R.id.password_text_view)
-    TextView mPasswordTextView;
 
     @Bind(R.id.login_button)
     Button mLogInButton;
@@ -35,6 +34,16 @@ public class WelcomeFragment extends Fragment {
         mLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = mUsernameTextView.getText().toString();
+                if (username.equals("")) {
+                    Toast.makeText(getActivity(), "Please enter a username", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ReceiptsList receipts = ReceiptsList.get(getActivity());
+                boolean userExists = receipts.setUsername(username);
+                if (!userExists) {
+                    receipts.addUser(username);
+                }
                 Intent intent = new Intent(getActivity(), GroupManagerActivity.class);
                 startActivity(intent);
             }
