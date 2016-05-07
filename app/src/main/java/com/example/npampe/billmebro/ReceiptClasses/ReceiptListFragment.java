@@ -196,6 +196,9 @@ public class ReceiptListFragment extends Fragment {
             receipts.get(0).setDayOfYear(receipts.get(0).getDayOfYear() - 2);
             receipts.get(1).setDayOfYear(receipts.get(1).getDayOfYear() - 2);
             receipts.get(2).setDayOfYear(receipts.get(2).getDayOfYear() - 1);
+            receipts.get(0).setTotal(133.70);
+            receipts.get(1).setTotal(500.00);
+            receipts.get(2).setTotal(250.00);
 
             for (Receipt r : receipts) {
                 ReceiptsList.get(getActivity()).addReceipt(r);

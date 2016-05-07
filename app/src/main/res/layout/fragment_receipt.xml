@@ -93,23 +93,5 @@
                 android:text="List of Contributing Members Here"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Conflict(s): "
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/receipt_conflicts_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="List of conflicts (late/did not pay) Here"/>
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>
