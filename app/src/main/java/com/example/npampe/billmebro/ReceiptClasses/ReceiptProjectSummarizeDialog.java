@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.npampe.billmebro.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,9 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
 
         for (Receipt receipt : mReceipts) {
             TextView receiptTextView = new TextView(getContext());
-            receiptTextView.setText(String.format("%s: %s", receipt.getTitle(), receipt.getTotal()));
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            String result = formatter.format(receipt.getTotal());
+            receiptTextView.setText(String.format("%s: %s", receipt.getTitle(), result));
             receiptTextView.setTextColor(COLORS_BASE[mReceipts.indexOf(receipt)]);
             mReceiptsLinearLayout.addView(receiptTextView);
         }
@@ -91,7 +94,9 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
         for (Receipt receipt : mReceipts) {
             sum += receipt.getTotal();
         }
-        mTotal.setText(Double.toString(sum));
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        String result = formatter.format(sum);
+        mTotal.setText(result);
     }
 
     private void initTextView(View v) {

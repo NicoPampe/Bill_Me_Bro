@@ -28,16 +28,16 @@
         </activity>
 
         <activity android:name=".ReceiptClasses.ReceiptPagerActivity"
-                  android:label="Receipt Pager Activity"
+                  android:label="Edit Receipt Pager"
                   android:parentActivityName=".ReceiptClasses.ReceiptListActivity"/>
         <activity android:name=".GroupClasses.GroupManagerActivity"
-                  android:label="Group List Activity"
+                  android:label="List of Groups"
                   android:parentActivityName=".WelcomeActivity"/>
         <activity android:name=".GroupClasses.GroupPagerActivity"
-                  android:label="Group Pager Activity"
+                  android:label="Edit Group Pager"
                   android:parentActivityName=".GroupClasses.GroupManagerActivity"/>
         <activity android:name=".ReceiptClasses.ReceiptListActivity"
-                  android:label="@string/app_name"
+                  android:label="List of Receipts"
                   android:parentActivityName=".GroupClasses.GroupManagerActivity" />
 
     </application>
