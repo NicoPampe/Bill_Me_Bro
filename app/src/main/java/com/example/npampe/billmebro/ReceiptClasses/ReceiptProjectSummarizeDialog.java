@@ -54,7 +54,11 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
         title.setTextSize(20);
 
         LinearLayout chartLinear = (LinearLayout)v.findViewById(R.id.chart_linear_layout);
+        LinearLayout.LayoutParams parmas = (LinearLayout.LayoutParams) chartLinear.getLayoutParams();
         mValues = calculateData(mValues);
+        parmas.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        parmas.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        chartLinear.setLayoutParams(parmas);
         chartLinear.addView(new MyGraphview(getContext(), mValues));
 
         return new AlertDialog.Builder(getActivity())
