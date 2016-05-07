@@ -28,7 +28,10 @@ import java.util.List;
  * Created by Nick Pampe on 5/6/2016.
  */
 public class ReceiptProjectSummarizeDialog extends DialogFragment {
+    private int[] COLORS_BASE = {Color.BLUE, Color.GREEN, Color.GRAY, Color.CYAN, Color.RED, Color.MAGENTA, Color.BLACK, Color.LTGRAY};
+
     private List<Receipt> mReceipts;
+    private LinearLayout mReceiptsLinearLayout;
 
     private TextView mTotal;
 
@@ -55,6 +58,13 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
         title.setTextColor(Color.WHITE);
         title.setTextSize(20);
 
+        for (Receipt receipt : mReceipts) {
+            TextView receiptTextView = new TextView(getContext());
+            receiptTextView.setText(String.format("%s: %s", receipt.getTitle(), receipt.getTotal()));
+            receiptTextView.setTextColor(COLORS_BASE[mReceipts.indexOf(receipt)]);
+            mReceiptsLinearLayout.addView(receiptTextView);
+        }
+
         LinearLayout chartLinear = (LinearLayout)v.findViewById(R.id.chart_linear_layout);
         LinearLayout.LayoutParams parmas = (LinearLayout.LayoutParams) chartLinear.getLayoutParams();
         mValues = calculateData(mValues);
@@ -63,10 +73,11 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             graphview.setRadiues(getActivity().getWindow().getDecorView().getWidth() * (float)0.55);
         } else {
-            graphview.setRadiues(getActivity().getWindow().getDecorView().getWidth() * (float)0.4);
+            graphview.setRadiues(getActivity().getWindow().getDecorView().getWidth() * (float)0.25);
         }
         chartLinear.setLayoutParams(parmas);
         chartLinear.addView(graphview);
+
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
@@ -85,6 +96,8 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
 
     private void initTextView(View v) {
         mTotal = (TextView)v.findViewById(R.id.preview_total_on_project);
+        mReceiptsLinearLayout = (LinearLayout)v.findViewById(R.id.dialog_list_receipts);
+
     }
 
     private ArrayList<Double> calculateData(ArrayList<Double> values) {
@@ -111,7 +124,7 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
     public class MyGraphview extends View {
         private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         private float[] value_degree;
-        private int[] COLORS = {Color.BLUE, Color.GREEN, Color.GRAY, Color.CYAN, Color.RED};
+        private int[] COLORS = COLORS_BASE;
 
 
         private float radiues = 400;
