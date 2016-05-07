@@ -25,4 +25,14 @@
             android:text="BLANK Title"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/chart_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+    </LinearLayout>
+
 </LinearLayout>
