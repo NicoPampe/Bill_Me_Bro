@@ -27,7 +27,6 @@ public class Group {
         mDate = new Date();
     }
 
-
     public UUID getId() {
         return mId;
     }

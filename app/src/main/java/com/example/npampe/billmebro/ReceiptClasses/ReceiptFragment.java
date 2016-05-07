@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,6 +39,7 @@ public class ReceiptFragment extends Fragment {
     private static final String ARG_RECEIPT_ID = "receipt_id";
     private static final String DIALOG_PICTURE = "DialogPicture";
     private static final String DIALOG_PREVIEW = "DialogPreview";
+    private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 2;
 
@@ -50,6 +52,8 @@ public class ReceiptFragment extends Fragment {
 
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
+    private Button mDateButton;
+    private EditText mLocationEditText;
 
 
     public static ReceiptFragment newInstance(UUID id) {
@@ -153,7 +157,7 @@ public class ReceiptFragment extends Fragment {
                 // I keep a reference to the 2 picker, in order to read their properties for later use
 
                 builder.setView(theView)
-                        .setPositiveButton(R.string.accept_price_change,new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.accept_price_change, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.d("DBG", "Price is: " + unit_euro.getValue() + "." + cent.getValue());
@@ -174,11 +178,11 @@ public class ReceiptFragment extends Fragment {
                 // I define the range for the first numberpicker.
 
                 String cents[] = new String[20];
-                for(int i = 0;i < 100; i+=5) {
-                    if( i < 10 )
-                        cents[i/5] = "0"+i;
+                for (int i = 0; i < 100; i += 5) {
+                    if (i < 10)
+                        cents[i / 5] = "0" + i;
                     else
-                        cents[i/5] = ""+i;
+                        cents[i / 5] = "" + i;
                 }
                 cent.setDisplayedValues(cents);
                 //I create the range of the possible values displayed in the second numberpicker.
@@ -193,6 +197,21 @@ public class ReceiptFragment extends Fragment {
             }
         });
         mReceiptTotalTextView.setText(Double.toString(mReceipt.getTotal()));
+
+        mDateButton = (Button) v.findViewById(R.id.receipt_date_picker);
+        updateDate();
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mReceipt.getDate());
+                dialog.setTargetFragment(ReceiptFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
+
+        //TODO: NEED TO IMPLEMENT
+        mLocationEditText = (EditText) v.findViewById(R.id.receipt_location_edit_text);
 
         return v;
     }
@@ -241,7 +260,7 @@ public class ReceiptFragment extends Fragment {
      * Update the receipts date
      */
     private void updateDate() {
-        // TODO: implement updateDate
+        mDateButton.setText(mReceipt.getFormattedDate());
     }
 
     /**
