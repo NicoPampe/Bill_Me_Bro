@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,10 +57,11 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
         LinearLayout chartLinear = (LinearLayout)v.findViewById(R.id.chart_linear_layout);
         LinearLayout.LayoutParams parmas = (LinearLayout.LayoutParams) chartLinear.getLayoutParams();
         mValues = calculateData(mValues);
-        parmas.width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        parmas.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        MyGraphview graphview = new MyGraphview(getContext(), mValues);
+
+        graphview.setRadiues(getActivity().getWindow().getDecorView().getWidth() * (float)0.55);
         chartLinear.setLayoutParams(parmas);
-        chartLinear.addView(new MyGraphview(getContext(), mValues));
+        chartLinear.addView(graphview);
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
@@ -105,7 +107,10 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
         private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         private float[] value_degree;
         private int[] COLORS = {Color.BLUE, Color.GREEN, Color.GRAY, Color.CYAN, Color.RED};
-        RectF rectf = new RectF(10, 10, 200, 200);
+
+
+        private float radiues = 400;
+        RectF rectf = new RectF(10, 10, radiues, radiues);
         int temp = 0;
 
         public MyGraphview(Context context, ArrayList<Double> values) {
@@ -122,6 +127,9 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
             super.onDraw(canvas);
             temp = 0;
 
+            RectF rectf = new RectF(10, 10, radiues, radiues);
+            Log.d("TAG", "onDraw: rad " + radiues);
+
             for (int i = 0; i < value_degree.length; i++) {//values2.length; i++) {
                 if (i == 0) {
                     paint.setColor(COLORS[i]);
@@ -132,6 +140,14 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
                     canvas.drawArc(rectf, temp, value_degree[i], true, paint);
                 }
             }
+        }
+
+        public float getRadiues() {
+            return radiues;
+        }
+
+        public void setRadiues(float radiues) {
+            this.radiues = radiues;
         }
     }
 }
