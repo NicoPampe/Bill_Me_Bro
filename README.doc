@@ -1,4 +1,4 @@
-﻿# Bill_Me_Bro
+# Bill_Me_Bro
 CSCI 448 Final Project
 
 /*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
@@ -77,10 +77,17 @@ HOW TO NAVIGATE THE APP
 
 --------------------------------------------
 
+////////////
+// NOTES  //
+////////////
+1) There are always three receipts that are added to show multiple date group. They act as an example.
+
 ////////////////
 // KNOWN BUGS //
 ////////////////
 1) Rotating device from the AddGroupActivity caused the current activity to fail. App is still running.
+
+2) When the database is cleared, you have to back out of the activity to get a refresh.
 
 
 ////////////////////////////
