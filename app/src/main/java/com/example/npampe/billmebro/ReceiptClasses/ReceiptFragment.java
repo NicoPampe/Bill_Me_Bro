@@ -31,6 +31,7 @@ import com.example.npampe.billmebro.PictureUtils;
 import com.example.npampe.billmebro.R;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -163,7 +164,9 @@ public class ReceiptFragment extends Fragment {
                                 Log.d("DBG", "Price is: " + unit_euro.getValue() + "." + cent.getValue());
 //                                Log.d(TAG, "onClick: " + Double.toString(cent.getValue() * 5));
                                 mReceipt.setTotal(unit_euro.getValue() + (cent.getValue() * 5 / 100.0));
-                                mReceiptTotalTextView.setText(Double.toString(mReceipt.getTotal()));
+                                NumberFormat formatter = NumberFormat.getCurrencyInstance();
+                                String resultTotal = formatter.format(mReceipt.getTotal());
+                                mReceiptTotalTextView.setText(resultTotal);
                             }
                         }).setNegativeButton(R.string.reject_price_change, new DialogInterface.OnClickListener() {
                     @Override
@@ -196,7 +199,10 @@ public class ReceiptFragment extends Fragment {
                 //Finally, the alert is showed!
             }
         });
-        mReceiptTotalTextView.setText(Double.toString(mReceipt.getTotal()));
+
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        String resultTotal = formatter.format(mReceipt.getTotal());
+        mReceiptTotalTextView.setText(resultTotal);
 
         mDateButton = (Button) v.findViewById(R.id.receipt_date_picker);
         updateDate();
@@ -209,9 +215,6 @@ public class ReceiptFragment extends Fragment {
                 dialog.show(manager, DIALOG_DATE);
             }
         });
-
-        //TODO: NEED TO IMPLEMENT
-        mLocationEditText = (EditText) v.findViewById(R.id.receipt_location_edit_text);
 
         return v;
     }
