@@ -1,18 +1,25 @@
 package com.example.npampe.billmebro.ReceiptClasses;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.npampe.billmebro.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +30,12 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
 
     private TextView mTotal;
 
+    private ArrayList<Double> mValues;
+
 
     public ReceiptProjectSummarizeDialog(List<Receipt> receipts) {
         mReceipts = receipts;
+        mValues = new ArrayList<>();
     }
 
     @Override
@@ -42,6 +52,14 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
         title.setGravity(Gravity.CENTER);
         title.setTextColor(Color.WHITE);
         title.setTextSize(20);
+
+        LinearLayout chartLinear = (LinearLayout)v.findViewById(R.id.chart_linear_layout);
+        LinearLayout.LayoutParams parmas = (LinearLayout.LayoutParams) chartLinear.getLayoutParams();
+        mValues = calculateData(mValues);
+        parmas.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        parmas.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        chartLinear.setLayoutParams(parmas);
+        chartLinear.addView(new MyGraphview(getContext(), mValues));
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
@@ -60,5 +78,60 @@ public class ReceiptProjectSummarizeDialog extends DialogFragment {
 
     private void initTextView(View v) {
         mTotal = (TextView)v.findViewById(R.id.preview_total_on_project);
+    }
+
+    private ArrayList<Double> calculateData(ArrayList<Double> values) {
+        for (Receipt receipt : mReceipts) {
+            values.add(receipt.getTotal());
+        }
+
+        float total=0;
+        for(int i=0;i<values.size();i++)
+        {
+            total+=values.get(i);
+        }
+        for(int i=0;i<values.size();i++)
+        {
+            values.set(i, 360*(values.get(i)/total));
+        }
+        return  values;
+    }
+
+    /**
+     * Graph View class for displaying a pie chart
+     * Curtice of SO: http://stackoverflow.com/questions/4397192/draw-pie-chart-in-android
+     */
+    public class MyGraphview extends View {
+        private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private float[] value_degree;
+        private int[] COLORS = {Color.BLUE, Color.GREEN, Color.GRAY, Color.CYAN, Color.RED};
+        RectF rectf = new RectF(10, 10, 200, 200);
+        int temp = 0;
+
+        public MyGraphview(Context context, ArrayList<Double> values) {
+            super(context);
+            value_degree = new float[values.size()];
+            for (int i = 0; i < values.size(); i++) {
+                value_degree[i] = values.get(i).floatValue();
+            }
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            // TODO Auto-generated method stub
+            super.onDraw(canvas);
+            temp = 0;
+
+            for (int i = 0; i < value_degree.length; i++) {//values2.length; i++) {
+                if (i == 0) {
+                    paint.setColor(COLORS[i]);
+                    canvas.drawArc(rectf, 0, value_degree[i], true, paint);
+                } else {
+                    temp += (int) value_degree[i - 1];
+                    paint.setColor(COLORS[i]);
+                    canvas.drawArc(rectf, temp, value_degree[i], true, paint);
+                }
+            }
+        }
     }
 }

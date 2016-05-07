@@ -9,9 +9,12 @@ import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.npampe.billmebro.R;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -70,7 +73,7 @@ public class ReceiptPreviewDialog extends DialogFragment {
         mDateTextView.setText(mReceipt.getDate().toString());
         // TODO: update to just be the mont and day
 //        mDateTextView.setText(String.format("%d %d", mReceipt.getDate().getMonth(), mReceipt.getDate().getDay()));
-        mTimeTextView.setText(String.format("%d",mReceipt.getDate().getTime()));
+        mTimeTextView.setText(String.format("%d", mReceipt.getDate().getTime()));
     }
 
     @Override

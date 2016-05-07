@@ -1,6 +1,10 @@
 package com.example.npampe.billmebro.ReceiptClasses;
 
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -520,4 +524,7 @@ public class ReceiptListFragment extends Fragment {
             updateParentListItem(receipts);
         }
     }
+
+
+
 }
